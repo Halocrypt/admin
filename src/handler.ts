@@ -18,13 +18,17 @@ export async function handleRequest(request: Request): Promise<Response> {
   if (!isAuthenticated(headers)) return json({ error: "no" });
   const { pathname } = new URL(url);
   if (method.toLowerCase() === "get") return json({ error: "post it" });
-  switch (pathname) {
-    case "/add":
-      return addLog(await request.arrayBuffer());
-    case "/get":
-      return getLogs(await request.arrayBuffer());
-    default:
-      return json({ error: "Invalid" });
+  try {
+    switch (pathname) {
+      case "/add":
+        return addLog(await request.arrayBuffer());
+      case "/get":
+        return getLogs(await request.arrayBuffer());
+      default:
+        return json({ error: "Invalid" });
+    }
+  } catch (e) {
+    return json({ error: e.message });
   }
 }
 
@@ -42,23 +46,22 @@ async function addLog(buf: ArrayBuffer) {
   const text = decoder.decode(buf);
   const data: Array<[User, Question, Answer, isCorrect]> = text
     .split("\n")
-    .map((x) => JSON.parse(x));
+    .map((x) => x && JSON.parse(x))
+    .filter(Boolean);
 
   const userToKVObjectMap = new Map<string, KVObject>();
-  await Promise.all(
-    data.map(async ([user, question, answer, isCorrect]) => {
-      let obj: KVObject;
-      const tmp = userToKVObjectMap.get(user);
-      if (tmp) {
-        obj = tmp;
-      } else {
-        const d = await USER_LOGS.get(user);
-        obj = d ? JSON.parse(d) : [];
-        userToKVObjectMap.set(user, obj);
-      }
-      obj.push([question, answer, isCorrect]);
-    })
-  );
+  for (const [user, question, answer, isCorrect] of data) {
+    let obj: KVObject;
+    const tmp = userToKVObjectMap.get(user);
+    if (tmp) {
+      obj = tmp;
+    } else {
+      const d = await USER_LOGS.get(user);
+      obj = d ? JSON.parse(d) : [];
+      userToKVObjectMap.set(user, obj);
+    }
+    obj.push([question, answer, isCorrect]);
+  }
 
   await Promise.all(
     Array.from(userToKVObjectMap.entries()).map(([user, obj]) =>
