@@ -1,0 +1,11 @@
+name = "log-service"
+type = "webpack"
+account_id = "98ae7927322a6cd882a42c7bd8368946"
+workers_dev = true
+route = "a6c44c893139a19fbdd2200fa06df58e"
+zone_id = ""
+webpack_config = "webpack.config.js"
+
+kv-namespaces = [
+  { binding = "USER_LOGS", id = "e8d26ba46ef643f3a9e364e83c3209ff" }
+]
