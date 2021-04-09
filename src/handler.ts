@@ -15,6 +15,7 @@ const decoder = new TextDecoder();
 
 export async function handleRequest(request: Request): Promise<Response> {
   const { headers, url, method } = request;
+  if (method.toLowerCase() === "options") return optionsResponse(request);
   if (!isAuthenticated(headers)) return json({ error: "no" });
   const { pathname } = new URL(url);
   if (method.toLowerCase() === "get") return json({ error: "post it" });
@@ -69,4 +70,17 @@ async function addLog(buf: ArrayBuffer) {
     )
   );
   return json({ success: true });
+}
+
+function optionsResponse(r: Request) {
+  return new Response("", {
+    status: 204,
+    headers: {
+      "access-control-allow-methods": "POST, GET, OPTIONS, DELETE",
+      "access-control-allow-origin": "*",
+      "access-control-allow-headers":
+        r.headers.get("access-control-request-headers") || "*",
+      "access-control-max-age": "86400",
+    },
+  });
 }
