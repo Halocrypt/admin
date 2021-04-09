@@ -10,6 +10,7 @@ type User = string;
 type Question = number;
 type Answer = string;
 type isCorrect = boolean;
+type Timestamp = number;
 
 const decoder = new TextDecoder();
 
@@ -42,16 +43,16 @@ async function getLogs(buf: ArrayBuffer) {
   return json({ data: JSON.parse((await USER_LOGS.get(name)) || "[]") });
 }
 
-type KVObject = Array<[Question, Answer, isCorrect]>;
+type KVObject = Array<[Question, Answer, isCorrect, Timestamp]>;
 async function addLog(buf: ArrayBuffer) {
   const text = decoder.decode(buf);
-  const data: Array<[User, Question, Answer, isCorrect]> = text
+  const data: Array<[User, Question, Answer, isCorrect, Timestamp]> = text
     .split("\n")
     .map((x) => x && JSON.parse(x))
     .filter(Boolean);
 
   const userToKVObjectMap = new Map<string, KVObject>();
-  for (const [user, question, answer, isCorrect] of data) {
+  for (const [user, ...rest] of data) {
     let obj: KVObject;
     const tmp = userToKVObjectMap.get(user);
     if (tmp) {
@@ -61,7 +62,7 @@ async function addLog(buf: ArrayBuffer) {
       obj = d ? JSON.parse(d) : [];
       userToKVObjectMap.set(user, obj);
     }
-    obj.push([question, answer, isCorrect]);
+    obj.push(rest);
   }
 
   await Promise.all(
