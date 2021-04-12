@@ -25,7 +25,7 @@ export async function handleRequest(request: Request): Promise<Response> {
       case "/add":
         return addLog(await request.arrayBuffer());
       case "/get":
-        return getLogs(await request.arrayBuffer());
+        return getLogs(await request.json());
       default:
         return json({ error: "Invalid" });
     }
@@ -37,9 +37,7 @@ export async function handleRequest(request: Request): Promise<Response> {
 function isAuthenticated(headers: Headers) {
   return headers.get("x-access-key") === ACCESS_KEY;
 }
-async function getLogs(buf: ArrayBuffer) {
-  const text = decoder.decode(buf);
-  const { name } = JSON.parse(text);
+async function getLogs({ name }: { name: string }) {
   return json({ data: JSON.parse((await USER_LOGS.get(name)) || "[]") });
 }
 
