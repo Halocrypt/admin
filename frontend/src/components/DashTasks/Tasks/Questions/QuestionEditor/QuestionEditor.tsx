@@ -87,7 +87,7 @@ export function QuestionEditor({
       {
         event,
         question_content,
-        question_hints: question_hints.filter((x) => !!clean(x)),
+        question_hints: question_hints.filter((x) => !!(x.content||"").trim()),
         question_number,
         question_points,
         answer,
