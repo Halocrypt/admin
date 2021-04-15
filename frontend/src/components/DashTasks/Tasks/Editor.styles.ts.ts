@@ -44,5 +44,8 @@ export const editorRoot = css({
   borderRadius: "10px",
   border: "2px solid var(--fg)",
   padding: "1rem",
+  media: {
+    "(max-width:750px)": { padding: ".5px" },
+  },
   boxShadow: "var(--box-shadow)",
 });

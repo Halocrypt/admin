@@ -67,11 +67,19 @@ export const taskWrapper = css({
   maxWidth: "750px",
   display: "flex",
   flexDirection: "column",
+  media: {
+    "(max-width:750px)": {
+      paddingLeft: "5px",
+      paddingRight: "5px",
+    },
+  },
 });
 
 export const resourceContainer = css({
   flex: "1",
   display: "flex",
   flexDirection: "column",
-  padding: "1rem",
+  media: {
+    "(min-width:750px)": { padding: "1rem" },
+  },
 });

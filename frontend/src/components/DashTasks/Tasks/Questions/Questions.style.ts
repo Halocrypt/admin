@@ -15,7 +15,11 @@ export const questionBox = css({
   paddingTop: "0.5rem",
   textAlign: "center",
   // border: "2px solid var(--font)",
-  width: "80%",
+
+  media: {
+    "(max-width:750px)": { padding: "5px" },
+    "(min-width:750px)": { width: "80%" },
+  },
   marginLeft: "auto",
   marginRight: "auto",
   maxWidth: "500px",
