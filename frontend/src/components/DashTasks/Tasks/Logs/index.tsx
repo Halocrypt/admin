@@ -1,4 +1,5 @@
 import { actionButton, center } from "@/styles";
+import { fixDate, readableDate } from "../Event/util";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { AnimatedInput } from "@/components/AnimatedInput";
@@ -7,7 +8,6 @@ import { Log } from "@/interfaces";
 import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
-import { fixDate } from "../Event/util";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { requests } from "@/bridge";
 import { taskWrapper } from "../../DashTasks.style";
@@ -90,7 +90,7 @@ function LogViewer({ accessKey }: { accessKey: string }) {
               <span> {answer}</span>
               <span> {isCorrect ? "✅" : "❌"}</span>
               <div class={css({ textAlign: "right", fontSize: ".8rem" })}>
-                {fixDate(timeStamp)}
+                {readableDate(timeStamp)}
               </div>
             </div>
           ))}
