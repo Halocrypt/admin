@@ -28,10 +28,11 @@ export const adminActionButton = [
 ].join(" ");
 
 export const actionWrapper = css({
-  margin: "auto",
   width: "80vw",
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
+  margin: "auto",
+  media: {
+    "(min-width:750px)": { display: "grid", gridTemplateColumns: "1fr 1fr" },
+  },
 });
 
 export const dashHeading = css({
