@@ -1,0 +1,11 @@
+name = "notification-service"
+type = "webpack"
+account_id = "98ae7927322a6cd882a42c7bd8368946"
+workers_dev = true
+route = "notifications.halocrypt.com/*"
+zone_id = "a6c44c893139a19fbdd2200fa06df58e"
+webpack_config = "webpack.config.js"
+
+kv-namespaces = [
+  { binding = "NOTIFICATIONS", id = "551f027f5c9a40108d45eac83a892960" }
+]

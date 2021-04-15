@@ -24,7 +24,7 @@ export async function handleRequest(request: Request): Promise<Response> {
     switch (pathname) {
       case "/add":
         return addLog(await request.arrayBuffer());
-      case "/get":
+      case "/":
         return getLogs(await request.json());
       default:
         return json({ error: "Invalid" });
