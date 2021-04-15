@@ -9,6 +9,8 @@ export const notificationItem = [
     border: "2px solid var(--fg)",
     boxShadow: "var(--box-shadow)",
     pseudo: { ":hover>[data-delete]": { opacity: "1" } },
+    marginTop: ".5rem",
+    marginBottom: ".5rem",
   }),
 ].join(" ");
 
