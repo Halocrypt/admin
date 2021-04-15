@@ -2,7 +2,7 @@ import { Events } from "@/interfaces";
 
 const host = location.host.includes("localhost")
   ? "http://localhost:5000/"
-  : "https://halocrypt-20.herokuapp.com";
+  : "https://halocrypt-21.herokuapp.com/";
 
 function absoluteURL(relative: string) {
   const u = new URL(relative, host);
