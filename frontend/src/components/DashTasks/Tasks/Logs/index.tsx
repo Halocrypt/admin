@@ -14,6 +14,7 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 import { useTimeout } from "@/hooks/use-timeout";
 import { useFilteredLogs } from "./use-filtered-logs";
+import { Paginate } from "@/components/Paginate/Paginate";
 
 export function Logs() {
   const [key, _, keyError] = useResource<string>(adminRoutes.logserverKey);
@@ -58,33 +59,45 @@ function LogViewer({ accessKey }: { accessKey: string }) {
       </div>
       <div class={css({ color: "red" })}>{error}</div>
       <div>
-        {logs &&
-          logs.map(([user, question, answer, isCorrect, timeStamp]) => (
-            <div
-              style={isCorrect ? { border: "2px solid green" } : null}
-              class={css({
-                padding: "1rem",
-                boxShadow: "var(--box-shadow)",
-                margin: ".5rem",
-                borderRadius: "5px",
-              })}
-            >
-              <div>
-                <span class={css({ color: "var(--fg)", margin: ".5rem" })}>
-                  {user}
-                </span>
-                <span>({question}) </span>
+        {logs && (
+          <Paginate
+            items={logs}
+            atOnce={100}
+            buttonWrapperClass={css({
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: ".5rem",
+            })}
+            buttonClass={actionButton}
+            render={([user, question, answer, isCorrect, timeStamp]) => (
+              <div
+                style={isCorrect ? { border: "2px solid green" } : null}
+                class={css({
+                  padding: "1rem",
+                  boxShadow: "var(--box-shadow)",
+                  margin: ".5rem",
+                  borderRadius: "5px",
+                })}
+              >
+                <div>
+                  <span class={css({ color: "var(--fg)", margin: ".5rem" })}>
+                    {user}
+                  </span>
+                  <span>({question}) </span>
+                </div>
+                <div>
+                  <span> {answer}</span>
+                  <span> {isCorrect ? "✅" : "❌"}</span>
+                </div>
+                <div class={css({ textAlign: "right", fontSize: ".8rem" })}>
+                  {readableDate(timeStamp)}
+                </div>
               </div>
-              <div>
-                <span> {answer}</span>
-                <span> {isCorrect ? "✅" : "❌"}</span>
-              </div>
-              <div class={css({ textAlign: "right", fontSize: ".8rem" })}>
-                {readableDate(timeStamp)}
-              </div>
-            </div>
-          ))
-          }
+            )}
+            dualButtons={true}
+          />
+        )}
       </div>
     </div>
   );

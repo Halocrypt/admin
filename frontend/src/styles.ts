@@ -19,7 +19,7 @@ export const actionButton = css({
   cursor: "pointer",
   marginLeft: "0.5rem",
   marginRight: "0.5rem",
-  transition: "0.3s linear",
+  transition: "0.3s ease",
   padding: ".2rem",
   paddingLeft: ".5rem",
   paddingRight: ".5rem",
