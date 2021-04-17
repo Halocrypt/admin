@@ -41,7 +41,7 @@ export const adminRoutes = {
   notificationKey: absoluteURL("/admin/notificaton-key/"),
   logserverKey: absoluteURL("/admin/yek-revresgol/"),
   eventUsers: (event: Events) => absoluteURL(`/admin/${event}/users/`),
-  getLogs: "https://logs.halocrypt.com/",
+  getLogs: "https://halocrypt-21-logs.herokuapp.com/",
   getNotifications: (event: Events) =>
     `https://notifications.halocrypt.com?channel=${event}`,
   addNotification: (event: Events) =>
