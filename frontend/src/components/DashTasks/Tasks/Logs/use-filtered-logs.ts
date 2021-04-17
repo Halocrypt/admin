@@ -5,17 +5,17 @@ import { Log } from "@/interfaces";
 import { raf } from "@/util/raf";
 
 export function useFilteredLogs(logs: Log[], query: string) {
-  const [filteredQuestions, setFilteredQuestions] = useState(logs);
+  const [filteredLogs, setFilteredLogs] = useState(logs);
   useEffect(() => {
     raf(() => {
       if (!logs) return;
-      if (!clean(query)) return setFilteredQuestions(logs);
-      setFilteredQuestions(
+      if (!clean(query)) return setFilteredLogs(logs);
+      setFilteredLogs(
         logs.slice().filter((x) => {
           return contains(x[0], query);
         })
       );
     });
   }, [logs, query]);
-  return filteredQuestions;
+  return filteredLogs;
 }

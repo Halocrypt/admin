@@ -60,9 +60,9 @@ export interface RendererProps {
   event: Events;
 }
 
-// type User = string;
+type User = string;
 type Question = number;
 type Answer = string;
 type isCorrect = boolean;
 type Timestamp = number;
-export type Log = [Question, Answer, isCorrect, Timestamp];
+export type Log = [User, Question, Answer, isCorrect, Timestamp];

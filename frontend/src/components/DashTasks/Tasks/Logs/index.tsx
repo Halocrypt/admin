@@ -3,17 +3,17 @@ import { fixDate, readableDate } from "../Event/util";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { AnimatedInput } from "@/components/AnimatedInput";
-import { Form } from "@/components/Form";
 import { Log } from "@/interfaces";
 import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
-import { requests } from "@/bridge";
+
 import { taskWrapper } from "../../DashTasks.style";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 import { useTimeout } from "@/hooks/use-timeout";
+import { useFilteredLogs } from "./use-filtered-logs";
 
 export function Logs() {
   const [key, _, keyError] = useResource<string>(adminRoutes.logserverKey);
@@ -41,42 +41,25 @@ export function Logs() {
 
 function LogViewer({ accessKey }: { accessKey: string }) {
   const [search, setSearch] = useState("");
-  const [error, setError] = useState("");
-  const [logs, setLogs] = useState<Log[]>(null);
-  const [message, setMessage] = useState("");
-  async function handleSubmit() {
-    setMessage("Fetching..");
-    const result = await requests.postJSON<Log[]>(
-      adminRoutes.getLogs,
-      { name: search },
-      { "x-access-key": accessKey }
-    ).result;
-    setMessage("");
-    const { data, error } = result;
-    setError(error || "");
-    if (data) {
-      if (data.length == 0) return setError("No logs found for this user");
-      setLogs(data);
-    }
-  }
+  const [fetchedLogs, _, error] = useResource<Log[]>(adminRoutes.getLogs, {
+    "x-access-key": accessKey,
+  });
+  const logs = useFilteredLogs(fetchedLogs, search);
+  if (!fetchedLogs) return <div>Fetching...</div>;
   return (
     <div>
       <div class={center}>
-        <Form onSubmit={handleSubmit}>
-          <AnimatedInput
-            value={search}
-            onInput={setSearch}
-            labelText="username"
-            wrapperClass={inputWrapperClass}
-          />
-          <button class={actionButton}>Search</button>
-        </Form>
+        <AnimatedInput
+          value={search}
+          onInput={setSearch}
+          labelText="username"
+          wrapperClass={inputWrapperClass}
+        />
       </div>
       <div class={css({ color: "red" })}>{error}</div>
-      <div>{message}</div>
       <div>
         {logs &&
-          logs.map(([question, answer, isCorrect, timeStamp]) => (
+          logs.map(([user, question, answer, isCorrect, timeStamp]) => (
             <div
               style={isCorrect ? { border: "2px solid green" } : null}
               class={css({
@@ -86,14 +69,22 @@ function LogViewer({ accessKey }: { accessKey: string }) {
                 borderRadius: "5px",
               })}
             >
-              <span>({question}) </span>
-              <span> {answer}</span>
-              <span> {isCorrect ? "✅" : "❌"}</span>
+              <div>
+                <span class={css({ color: "var(--fg)", margin: ".5rem" })}>
+                  {user}
+                </span>
+                <span>({question}) </span>
+              </div>
+              <div>
+                <span> {answer}</span>
+                <span> {isCorrect ? "✅" : "❌"}</span>
+              </div>
               <div class={css({ textAlign: "right", fontSize: ".8rem" })}>
                 {readableDate(timeStamp)}
               </div>
             </div>
-          ))}
+          ))
+          }
       </div>
     </div>
   );
