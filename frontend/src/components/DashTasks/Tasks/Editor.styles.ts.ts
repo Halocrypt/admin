@@ -42,10 +42,9 @@ export const closeActionContainer = css({
 export const editorRoot = css({
   margin: "1rem",
   borderRadius: "10px",
-  border: "2px solid var(--fg)",
   padding: "1rem",
   media: {
     "(max-width:750px)": { padding: ".5px" },
   },
-  boxShadow: "var(--box-shadow)",
+  // boxShadow: "var(--box-shadow)",
 });

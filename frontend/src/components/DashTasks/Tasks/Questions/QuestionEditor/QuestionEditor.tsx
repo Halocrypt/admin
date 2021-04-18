@@ -87,7 +87,9 @@ export function QuestionEditor({
       {
         event,
         question_content,
-        question_hints: question_hints.filter((x) => !!(x.content||"").trim()),
+        question_hints: question_hints.filter(
+          (x) => !!(x.content || "").trim()
+        ),
         question_number,
         question_points,
         answer,
@@ -118,7 +120,7 @@ export function QuestionEditor({
       <div>
         <QuestionDetails question={currentQuestion} />
       </div>
-      <div class={center}>
+      <div class={[center, css({ marginTop: "2rem" })]}>
         <AnimatedInput
           value={questionText}
           onInput={setQuestionText}
@@ -143,6 +145,11 @@ export function QuestionEditor({
           wrapperClass={animInputWrapperClass}
         />
         <HintEditor hints={hints} setHints={setHints} />
+      </div>
+      <div class={closeActionContainer}>
+        <button class={actionButton} onClick={handleSave}>
+          Save
+        </button>
       </div>
     </section>
   );
