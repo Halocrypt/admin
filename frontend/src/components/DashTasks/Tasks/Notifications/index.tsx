@@ -17,13 +17,10 @@ import { eventHeadWrapper } from "../Event/Event.styles";
 import { requests } from "@/bridge";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
-import { useTimeout } from "@/hooks/use-timeout";
 
 export function Notifications() {
   const [events, _, eventError] = useResource<IEvent[]>(adminRoutes.getEvents);
   const [key, __, keyError] = useResource<string>(adminRoutes.notificationKey);
-  const timeOut = useTimeout(2000);
-  if ((!events || !key) && !timeOut) return null;
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
   return (
     <AnimateLayout

@@ -12,14 +12,11 @@ import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { taskWrapper } from "../../DashTasks.style";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
-import { useTimeout } from "@/hooks/use-timeout";
 import { useFilteredLogs } from "./use-filtered-logs";
 import { Paginate } from "@/components/Paginate/Paginate";
 
 export function Logs() {
   const [key, _, keyError] = useResource<string>(adminRoutes.logserverKey);
-  const timeOut = useTimeout(2000);
-  if (!key && !timeOut) return null;
   return (
     <AnimateLayout element="section" animId="edit-logs" class={taskWrapper}>
       <h2 class={eventHeadWrapper}>Logs </h2>

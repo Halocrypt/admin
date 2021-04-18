@@ -9,12 +9,10 @@ import { eventHeadWrapper } from "../Event/Event.styles";
 import { taskWrapper } from "../../DashTasks.style";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
-import { useTimeout } from "@/hooks/use-timeout";
 
 export function Users() {
   const [events, _, error] = useResource<IEvent[]>(adminRoutes.getEvents);
-  const timeOut = useTimeout(2000);
-  if (!events && !timeOut) return null;
+
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
 
   return (

@@ -7,14 +7,12 @@ import { IEvent } from "@/interfaces";
 import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "./Event.styles";
-import { useTimeout } from "@/hooks/use-timeout";
 
 export function EventList() {
   const [events, fetchEvents, error] = useResource<IEvent[]>(
     adminRoutes.getEvents
   );
-  const timeOut = useTimeout(2000);
-  if (!events && !timeOut) return null;
+
   return (
     <AnimateLayout element="section" animId="edit-event" class={taskWrapper}>
       <h2 class={eventHeadWrapper}>Events</h2>
