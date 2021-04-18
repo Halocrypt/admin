@@ -69,12 +69,13 @@ function LogViewer({ accessKey }: { accessKey: string }) {
             buttonClass={actionButton}
             render={([user, question, answer, isCorrect, timeStamp]) => (
               <div
-                style={isCorrect ? { border: "2px solid green" } : null}
+                style={isCorrect ? { borderColor: "green" } : null}
                 class={css({
                   padding: "1rem",
                   boxShadow: "var(--box-shadow)",
                   margin: ".5rem",
                   borderRadius: "5px",
+                  border: "2px solid transparent",
                 })}
               >
                 <div>

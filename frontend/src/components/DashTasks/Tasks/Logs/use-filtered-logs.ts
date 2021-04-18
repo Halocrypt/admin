@@ -11,7 +11,7 @@ export function useFilteredLogs(logs: Log[], query: string) {
       if (!logs) return;
       if (!clean(query)) return setFilteredLogs(logs);
       setFilteredLogs(
-        logs.slice().filter((x) => {
+        logs.filter((x) => {
           return contains(x[0], query);
         })
       );
