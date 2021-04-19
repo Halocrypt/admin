@@ -7,7 +7,6 @@ import { FetchResourceCallback } from "@/hooks/use-resource";
 import { IUser } from "@/interfaces";
 import { actionButton, center } from "@/styles";
 import { userRoutes } from "@/util/api-routes";
-import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { useRef, useState } from "@hydrophobefireman/ui-lib";
 import { css } from "catom";
 import { fixDate } from "../Event/util";
