@@ -69,6 +69,7 @@ function Editor({ event, onEdit, close }: EditProps) {
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   function handleSave() {
+    if (message) return;
     setError("");
     setMessage("Uploading...");
     updateEvent(

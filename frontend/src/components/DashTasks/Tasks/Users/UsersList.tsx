@@ -44,6 +44,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     fetchUsers(true).then(reset);
   };
   function handleDisqualify(e: JSX.TargetedMouseEvent<HTMLButtonElement>) {
+    if (message) return;
     const { currentTarget } = e;
     const { index } = currentTarget.dataset;
     const u = users[+index];
@@ -64,6 +65,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     });
   }
   function handleDelete(e: JSX.TargetedMouseEvent<HTMLButtonElement>) {
+    if (message) return;
     const { currentTarget } = e;
     const { user, name } = currentTarget.dataset;
     setError("");
@@ -80,6 +82,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     });
   }
   function handleRequalify(e: JSX.TargetedMouseEvent<HTMLButtonElement>) {
+    if (message) return;
     const { currentTarget } = e;
     const { user, name } = currentTarget.dataset;
     setError("");
@@ -176,7 +179,7 @@ function DqReason({
         wrapperClass={inputWrapperClass}
         value={reason}
         onInput={setReason}
-        labelText="Disqualification Reason"
+        labelText="Reason"
       />
       <AnimatedInput
         wrapperClass={inputWrapperClass}

@@ -1,6 +1,11 @@
 import { Events, IQuestion, RenderableContent } from "@/interfaces";
 import { actionButton, center } from "@/styles";
-import { closeActionContainer, editorRoot } from "../../Editor.styles.ts";
+import {
+  closeActionContainer,
+  editorFields,
+  editorRoot,
+  fieldWrap,
+} from "../../Editor.styles.ts";
 
 import { AnimatedInput } from "@/components/AnimatedInput";
 import { CloseIcon } from "@/components/Icons/Close";
@@ -62,6 +67,7 @@ export function QuestionEditor({
     question_points: points,
   };
   async function handleSave() {
+    if (loading) return;
     const content = currentQuestion.question_content.content;
     if (
       !clean(currentQuestion._secure_.answer) ||
@@ -71,6 +77,7 @@ export function QuestionEditor({
       setLoading("");
       return setError("Values cannot be blank");
     }
+    window.scrollTo({ top: 0, behavior: "smooth" });
     setError("");
     setLoading("Sending to the server..");
     const {
@@ -120,30 +127,34 @@ export function QuestionEditor({
       <div>
         <QuestionDetails question={currentQuestion} />
       </div>
-      <div class={[center, css({ marginTop: "2rem" })]}>
-        <AnimatedInput
-          value={questionText}
-          onInput={setQuestionText}
-          labelText="Question Content"
-          wrapperClass={animInputWrapperClass}
-        />
-        <RenderableTypeSelector
-          active={questionType}
-          handleClick={handleQuestionTypeChange}
-        />
-        <AnimatedInput
-          value={answer}
-          onInput={setAnswer}
-          labelText="Answer"
-          wrapperClass={animInputWrapperClass}
-        />
-        <AnimatedInput
-          value={points as any}
-          onInput={(x) => setPoints(+x)}
-          type="number"
-          labelText="Points"
-          wrapperClass={animInputWrapperClass}
-        />
+      <div class={editorFields}>
+        <div class={fieldWrap}>
+          <AnimatedInput
+            value={questionText}
+            onInput={setQuestionText}
+            labelText="Content"
+            wrapperClass={animInputWrapperClass}
+          />
+          <RenderableTypeSelector
+            active={questionType}
+            handleClick={handleQuestionTypeChange}
+          />
+        </div>
+        <div class={fieldWrap}>
+          <AnimatedInput
+            value={answer}
+            onInput={setAnswer}
+            labelText="Answer"
+            wrapperClass={animInputWrapperClass}
+          />
+          <AnimatedInput
+            value={points as any}
+            onInput={(x) => setPoints(+x)}
+            type="number"
+            labelText="Points"
+            wrapperClass={animInputWrapperClass}
+          />
+        </div>
         <HintEditor hints={hints} setHints={setHints} />
       </div>
       <div class={closeActionContainer}>
@@ -193,14 +204,14 @@ function HintEditor({
     };
   return (
     <div>
-      <h1>Hints</h1>
+      <h1 class={css({ marginTop: "2rem", marginBottom: "0" })}>Hints</h1>
       <div class={css({ textAlign: "right" })}>
         <button class={actionButton} onClick={addHint}>
           Add hint
         </button>
       </div>
       {hints.map((x, i) => (
-        <div>
+        <div class={fieldWrap}>
           <AnimatedInput
             value={x.content || ""}
             data-index={i}

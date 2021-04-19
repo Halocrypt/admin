@@ -27,7 +27,7 @@ export function AddNotification({
 }) {
   const [ts, setTs] = useState(+new Date());
   useInterval(() => setTs(+new Date()), 1000);
-  const [loading, setLoading] = useState("");
+  const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [content, setContent] = useState("");
   const [contentType, setContentType] = useState<RenderableContent["type"]>(
@@ -36,13 +36,14 @@ export function AddNotification({
 
   const user = client.getState().user;
   async function handleSave() {
+    if (message || !content.trim()) return;
     const body: INotification = {
       ts,
       content: { content, type: contentType },
       issuedBy: user,
     };
     setError("");
-    setLoading("Adding...");
+    setMessage("Adding...");
     const result = await requests.postJSON(
       adminRoutes.addNotification(event),
       body,
@@ -51,7 +52,7 @@ export function AddNotification({
     const { data, error } = result;
     setError(error || "");
     if (data) {
-      setLoading("Syncing...");
+      setMessage("Syncing...");
       fetchNotifs(true).then(close);
     }
   }
@@ -66,7 +67,7 @@ export function AddNotification({
         </button>
       </div>
       <div class={css({ marginLeft: "1rem" })}>
-        <div>{loading}</div>
+        <div>{message}</div>
         <div class={css({ color: "red" })}>{error}</div>
       </div>
       <div>

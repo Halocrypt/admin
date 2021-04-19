@@ -81,6 +81,7 @@ function NotificationRenderer({
   }
 
   async function deleteNotif() {
+    if (message) return;
     setMessage("deleting..");
     const res = await requests.postJSON(
       adminRoutes.deleteNotification(event),

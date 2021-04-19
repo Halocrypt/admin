@@ -57,7 +57,7 @@ function QuestionsRenderer({
           <AnimatedInput
             value={search}
             onInput={setSearch}
-            labelText="Search questions"
+            labelText="Search"
             wrapperClass={css({ margin: "1rem" })}
           />
           <div>

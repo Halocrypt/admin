@@ -1,4 +1,4 @@
-import { actionButton, centerFlex } from "@/styles";
+import { actionButton, center, centerFlex } from "@/styles";
 
 import { css } from "catom";
 
@@ -47,4 +47,13 @@ export const editorRoot = css({
     "(max-width:750px)": { padding: ".5px" },
   },
   // boxShadow: "var(--box-shadow)",
+});
+
+export const editorFields = [center, css({ marginTop: "2rem" })].join(" ");
+
+export const fieldWrap = css({
+  border: "2px solid var(--fg)",
+  borderRadius: "10px",
+  marginTop: "1rem",
+  marginBottom: "1rem",
 });
