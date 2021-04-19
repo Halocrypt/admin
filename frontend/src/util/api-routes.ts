@@ -19,7 +19,6 @@ export const userRoutes = {
   confirmEmail: absoluteURL("/accounts/email-verification/confirm/"),
   requestNewPassword: (user: string) =>
     absoluteURL(`/accounts/${user}/password/new/request/`),
-
   confirmPasswordToken: (user: string) =>
     absoluteURL(`/accounts/${user}/password/new/verify/`),
   editUser: (user: string) => absoluteURL(`/accounts/${user}/edit/`),
@@ -41,7 +40,7 @@ export const adminRoutes = {
   notificationKey: absoluteURL("/admin/notificaton-key/"),
   logserverKey: absoluteURL("/admin/yek-revresgol/"),
   eventUsers: (event: Events) => absoluteURL(`/admin/${event}/users/`),
-  getLogs: "https://halocrypt-21-logs.herokuapp.com/",
+  getLogs: "https://logs.halocrypt.com/",
   getNotifications: (event: Events) =>
     `https://notifications.halocrypt.com?channel=${event}`,
   addNotification: (event: Events) =>
