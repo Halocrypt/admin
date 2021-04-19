@@ -13,6 +13,10 @@ import { resourceContainer } from "../../DashTasks.style";
 import { useFilteredUsers } from "./use-filtered-users";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
+import { HaloIcon } from "@/components/Icons/Halo";
+
+import { ProfileViewer } from "./ProfileViewer";
+import { Paginate } from "@/components/Paginate/Paginate";
 
 export function UsersList({ event }: { event: Events }) {
   const [users, fetchUsers, error] = useResource<IUser[]>(
@@ -30,7 +34,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
   const [message, setMessage] = useState(null);
   const [nextAction, setNextAction] = useState<(...a: any) => void>(null);
   const [error, setError] = useState("");
-
+  const [profView, setProfView] = useState<IUser>(null);
   const [dqUser, setDq] = useState<IUser>(null);
 
   function reset() {
@@ -99,6 +103,14 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     });
   }
   const me = client.getState().user;
+  if (profView)
+    return (
+      <ProfileViewer
+        close={() => setProfView(null)}
+        user={profView}
+        fetchUsers={fetchUsers}
+      />
+    );
   return (
     <>
       {(message || dqUser) && (
@@ -124,38 +136,67 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
         wrapperClass={inputWrapperClass}
       />
       <div class={resourceContainer}>
-        {filteredUsers.map((x, i) => (
-          <div class={userItem}>
-            <div>
-              <span class={userNameCss}>{x.user}</span> ({x.name}) - ({x.points}{" "}
-              points) {x.user === me && "(You)"}{" "}
-              {x.is_disqualified && (
-                <span class={css({ color: "red" })}>(Disqualified)</span>
-              )}
+        <Paginate
+          atOnce={100}
+          items={filteredUsers}
+          dualButtons={true}
+          buttonClass={actionButton}
+          render={(x: IUser, i: number) => (
+            <div class={userItem}>
+              <div>
+                <span class={userNameCss}>
+                  {x.is_admin && (
+                    <HaloIcon
+                      size={"2rem"}
+                      className={css({ transform: "translateY(.5rem)" })}
+                    />
+                  )}{" "}
+                  {x.user}
+                </span>{" "}
+                ({x.name}) - ({x.points} points) {x.user === me && "(You)"}{" "}
+                {x.is_disqualified && (
+                  <span class={css({ color: "red" })}>(Disqualified)</span>
+                )}
+              </div>
+              <div class={adminActionBox} data-db-actions>
+                <button
+                  data-index={i}
+                  onClick={(e) =>
+                    setProfView(filteredUsers[+e.currentTarget.dataset.index])
+                  }
+                  class={css({ textDecoration: "underline" })}
+                >
+                  Profile
+                </button>
+                {!x.is_admin && (
+                  <>
+                    <button
+                      class={actionButton}
+                      style={{ "--fg": x.is_disqualified ? "green" : "red" }}
+                      data-index={i}
+                      data-user={x.user}
+                      data-name={x.name}
+                      onClick={
+                        x.is_disqualified ? handleRequalify : handleDisqualify
+                      }
+                    >
+                      {x.is_disqualified ? "Requalify" : "Disqualify"}
+                    </button>
+                    <button
+                      class={actionButton}
+                      style={{ "--fg": "red" }}
+                      data-user={x.user}
+                      data-name={x.name}
+                      onClick={handleDelete}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </div>
             </div>
-            <div class={adminActionBox} data-db-actions>
-              <button
-                class={actionButton}
-                style={{ "--fg": x.is_disqualified ? "green" : "red" }}
-                data-index={i}
-                data-user={x.user}
-                data-name={x.name}
-                onClick={x.is_disqualified ? handleRequalify : handleDisqualify}
-              >
-                {x.is_disqualified ? "Requalify" : "Disqualify"}
-              </button>
-              <button
-                class={actionButton}
-                style={{ "--fg": "red" }}
-                data-user={x.user}
-                data-name={x.name}
-                onClick={handleDelete}
-              >
-                Delete
-              </button>
-            </div>
-          </div>
-        ))}
+          )}
+        />
       </div>
     </>
   );

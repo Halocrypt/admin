@@ -19,7 +19,7 @@
     "@hydrophobefireman/flask-jwt-jskit": "^0.0.6",
     "@hydrophobefireman/j-utils": "^2.1.6",
     "@hydrophobefireman/qwc": "^0.0.6",
-    "@hydrophobefireman/ui-anim": "^0.0.8",
+    "@hydrophobefireman/ui-anim": "0.0.11",
     "@hydrophobefireman/ui-lib": "^1.9.3",
     "statedrive": "^0.0.12"
   },

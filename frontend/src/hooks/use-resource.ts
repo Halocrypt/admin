@@ -13,6 +13,7 @@ export function useResource<T, R extends boolean = true>(
   const [events, setEvents] = useState<T>(null);
   const [error, setError] = useState("");
   function fetchResource(returnPromise?: R) {
+    if (events) setEvents(null);
     const { controller, result } = requests.get<T>(url, headers || {});
     const prom = result.then((x) => {
       const { data, error } = x;

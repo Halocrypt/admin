@@ -6,7 +6,7 @@ export function RenderableContentViewer({
 }: {
   content: RenderableContent;
 }) {
-  if (!content) return;
+  if (!content || !content.content) return;
   if (content.type === "image-embed")
     return <img src={content.content} class={imgCss} />;
   if (content.type === "link") {
