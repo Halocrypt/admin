@@ -14,7 +14,12 @@ export function EventList() {
   );
 
   return (
-    <AnimateLayout element="section" animId="edit-event" class={taskWrapper}>
+    <AnimateLayout
+      onlyInitial
+      element="section"
+      animId="edit-event"
+      class={taskWrapper}
+    >
       <h2 class={eventHeadWrapper}>Events</h2>
       {!events ? (
         <div>

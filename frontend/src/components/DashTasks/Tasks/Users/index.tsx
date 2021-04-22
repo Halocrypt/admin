@@ -16,7 +16,12 @@ export function Users() {
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
 
   return (
-    <AnimateLayout element="section" animId="edit-users" class={taskWrapper}>
+    <AnimateLayout
+      onlyInitial
+      element="section"
+      animId="edit-users"
+      class={taskWrapper}
+    >
       <h2 class={eventHeadWrapper}>Users</h2>
       {!events ? (
         <div>

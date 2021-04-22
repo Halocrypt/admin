@@ -10,12 +10,7 @@ import { RenderableContentViewer } from "../../../RenderableContentViewer";
 import { actionButton } from "@/styles";
 import { css } from "catom";
 import { useState } from "@hydrophobefireman/ui-lib";
-import {
-  AnimateLayout,
-  DeclarativeTransform,
-} from "@hydrophobefireman/ui-anim";
-
-const transform = new DeclarativeTransform({ scaleY: 0, scaleX: 0 });
+import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 
 interface QuestionDetailsProps {
   question: IQuestion;
@@ -49,23 +44,29 @@ export function QuestionDetails({
             Hints:
           </button>
 
-          {showHints && (
-            <AnimateLayout
-              class={css({ transformOrigin: "0% 0%" })}
-              animId={"hint"}
-              element="ul"
-              initialSnapshot={transform}
-            >
-              {question.question_hints.map(
-                (x) =>
-                  x.content && (
-                    <li>
-                      <RenderableContentViewer content={x} />
-                    </li>
-                  )
-              )}
-            </AnimateLayout>
-          )}
+          <AnimateLayout
+            animId={"hint"}
+            element="ul"
+            class={
+              !showHints
+                ? css({
+                    height: "0px",
+                    width: "0px",
+                    overflow: "hidden",
+                    opacity: "0",
+                  })
+                : css({ opacity: "1" })
+            }
+          >
+            {question.question_hints.map(
+              (x) =>
+                x.content && (
+                  <li>
+                    <RenderableContentViewer content={x} />
+                  </li>
+                )
+            )}
+          </AnimateLayout>
         </div>
       )}
       {question._secure_ && (

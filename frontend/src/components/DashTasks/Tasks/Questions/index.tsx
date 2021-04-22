@@ -20,6 +20,7 @@ export function Questions() {
       element="section"
       animId="edit-questions"
       class={taskWrapper}
+      onlyInitial
     >
       <h2 class={eventHeadWrapper}>Questions</h2>
       {!events ? (

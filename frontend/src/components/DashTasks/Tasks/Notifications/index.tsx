@@ -24,6 +24,7 @@ export function Notifications() {
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
   return (
     <AnimateLayout
+      onlyInitial
       element="section"
       animId="edit-notifications"
       class={taskWrapper}
