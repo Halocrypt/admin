@@ -1,6 +1,6 @@
 import { RenderableContent } from "@/interfaces";
 import { imgCss } from "../DashTasks/Tasks/Questions/Questions.style";
-
+import { css } from "catom";
 export function RenderableContentViewer({
   content,
 }: {
@@ -11,7 +11,12 @@ export function RenderableContentViewer({
     return <img src={content.content} class={imgCss} />;
   if (content.type === "link") {
     return (
-      <a href={content.content} target="_blank" rel="noopener">
+      <a
+        href={content.content}
+        target="_blank"
+        rel="noopener"
+        class={css({ wordBreak: "break-all" })}
+      >
         {content.content}
       </a>
     );

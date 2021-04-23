@@ -18,7 +18,12 @@ import { Paginate } from "@/components/Paginate/Paginate";
 export function Logs() {
   const [key, _, keyError] = useResource<string>(adminRoutes.logserverKey);
   return (
-    <AnimateLayout element="section" animId="edit-logs" class={taskWrapper}>
+    <AnimateLayout
+      onlyInitial
+      element="section"
+      animId="edit-logs"
+      class={taskWrapper}
+    >
       <h2 class={eventHeadWrapper}>Logs </h2>
       {!key ? (
         <div>

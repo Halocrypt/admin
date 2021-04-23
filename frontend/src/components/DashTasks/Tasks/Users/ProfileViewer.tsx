@@ -1,19 +1,19 @@
-import { requests } from "@/bridge";
+import { actionButton, center } from "@/styles";
+import { profileContents, profileViewer } from "./Users.style";
+import { useRef, useState } from "@hydrophobefireman/ui-lib";
+
 import { AnimatedInput } from "@/components/AnimatedInput";
 import { BackArrowIcon } from "@/components/Icons/BackArrow";
-import { HaloIcon } from "@/components/Icons/Halo";
-import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { FetchResourceCallback } from "@/hooks/use-resource";
+import { HaloIcon } from "@/components/Icons/Halo";
 import { IUser } from "@/interfaces";
-import { actionButton, center } from "@/styles";
-import { userRoutes } from "@/util/api-routes";
-import { useRef, useState } from "@hydrophobefireman/ui-lib";
 import { css } from "catom";
 import { fixDate } from "../Event/util";
-
+import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
+import { requests } from "@/bridge";
 import { useOverflowHidden } from "./use-overflow-hidden";
 import { usePropVal } from "./use-prop-val";
-import { profileContents, profileViewer } from "./Users.style";
+import { userRoutes } from "@/util/api-routes";
 
 interface ProfileViewerProps {
   user: IUser;
@@ -41,6 +41,7 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
   const ref = useRef<HTMLDivElement>();
 
   const [message, setMessage] = useState("");
+  console.log(message);
   const [error, setError] = useState("");
   function resetMessages() {
     setMessage("");
@@ -63,8 +64,8 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
     const { data, error } = res;
     setError(error || "");
     if (data) {
-      const fetching = fetchUsers(true);
       setMessage("Syncing..");
+      const fetching = fetchUsers(true);
       fetching.then(close);
     }
   }
