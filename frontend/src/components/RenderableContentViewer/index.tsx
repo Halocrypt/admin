@@ -1,6 +1,6 @@
 import { RenderableContent } from "@/interfaces";
-import { imgCss } from "../DashTasks/Tasks/Questions/Questions.style";
 import { css } from "catom";
+import { imgCss } from "../DashTasks/Tasks/Questions/Questions.style";
 export function RenderableContentViewer({
   content,
 }: {

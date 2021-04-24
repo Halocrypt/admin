@@ -3,7 +3,6 @@ import { IUser } from "./interfaces";
 import { userRoutes } from "./util/api-routes";
 
 const client = new Bridge<IUser>(null);
-console.log("initialised bridge");
 
 client.setRoutes({
   loginRoute: userRoutes.login,

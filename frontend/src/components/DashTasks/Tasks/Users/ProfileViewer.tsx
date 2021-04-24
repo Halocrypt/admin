@@ -41,7 +41,7 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
   const ref = useRef<HTMLDivElement>();
 
   const [message, setMessage] = useState("");
-  console.log(message);
+
   const [error, setError] = useState("");
   function resetMessages() {
     setMessage("");
