@@ -1059,10 +1059,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
-"@hydrophobefireman/flask-jwt-jskit@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.yarnpkg.com/@hydrophobefireman/flask-jwt-jskit/-/flask-jwt-jskit-0.0.6.tgz#0827d49d8365dbbf434ca0d2ff718b8a0463993c"
-  integrity sha512-w4cv02ex4E4066b4x1svy4x3iAN9bQB4CaPFk+Gi1cihZWa3Ucdsj8f1kEPjVuKaUiciKyQiFxJxMJQ3n5krxg==
+"@hydrophobefireman/flask-jwt-jskit@^0.1.0":
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/@hydrophobefireman/flask-jwt-jskit/-/flask-jwt-jskit-0.1.0.tgz#dd93eeadd252d2d0fdbd330ed6644896c0da0332"
+  integrity sha512-MMM+r7YfFcArudZ4VRX21AnKkGzL3DNK3kRH+dSMCIoUahmzmRgieVBk2O/ZMMRHOZBdmG5zNPg/S9u1r6HcAg==
 
 "@hydrophobefireman/j-utils@^2.1.6":
   version "2.1.6"
@@ -6193,10 +6193,10 @@ webpack-sources@^2.1.1:
     source-list-map "^2.0.1"
     source-map "^0.6.1"
 
-webpack@^5.35.0:
-  version "5.35.0"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.35.0.tgz#4db23c2b96c4e53a90c5732d7cdb301a84a33576"
-  integrity sha512-au3gu55yYF/h6NXFr0KZPZAYxS6Nlc595BzYPke8n0CSff5WXcoixtjh5LC/8mXunkRKxhymhXmBY0+kEbR6jg==
+webpack@^5.35.1:
+  version "5.35.1"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.35.1.tgz#857670799465c8a5cbb94c4c175d60ac42d18ba3"
+  integrity sha512-uWKYStqJ23+N6/EnMEwUjPSSKUG1tFmcuKhALEh/QXoUxwN8eb3ATNIZB38A+fO6QZ0xfc7Cu7KNV9LXNhDCsw==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.47"

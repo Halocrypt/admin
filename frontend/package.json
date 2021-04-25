@@ -16,7 +16,7 @@
     "url": "https://github.com/Hydrophobefireman/ui-lib-boilerplate/issues"
   },
   "dependencies": {
-    "@hydrophobefireman/flask-jwt-jskit": "^0.0.6",
+    "@hydrophobefireman/flask-jwt-jskit": "^0.1.0",
     "@hydrophobefireman/j-utils": "^2.1.6",
     "@hydrophobefireman/qwc": "^0.0.6",
     "@hydrophobefireman/ui-anim": "0.0.12",
@@ -53,7 +53,7 @@
     "terser-webpack-plugin": "^5.1.1",
     "typescript": "^4.2.4",
     "url-loader": "^4.1.1",
-    "webpack": "^5.35.0",
+    "webpack": "^5.35.1",
     "webpack-cli": "^4.6.0",
     "webpack-dev-server": "^3.11.2"
   },
