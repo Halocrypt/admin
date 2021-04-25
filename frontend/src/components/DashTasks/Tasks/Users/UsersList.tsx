@@ -1,27 +1,29 @@
 import { Events, IUser, RendererProps } from "@/interfaces";
 import { adminActionBox, userItem, userNameCss } from "./Users.style";
-import { client, requests } from "@/bridge";
+import {
+  deleteUser,
+  disqualifyUser,
+  listUsers,
+  requalifyUser,
+} from "@/packages/halo-api/admin";
 
 import { AnimatedInput } from "@/components/AnimatedInput";
 import { Form } from "@/components/Form";
+import { HaloIcon } from "@/components/Icons/Halo";
 import { ModalLayout } from "@/components/Modal";
+import { Paginate } from "@/components/Paginate/Paginate";
+import { ProfileViewer } from "./ProfileViewer";
 import { actionButton } from "@/styles";
-import { adminRoutes } from "@/util/api-routes";
+import { client } from "@/bridge";
 import { css } from "catom";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { resourceContainer } from "../../DashTasks.style";
 import { useFilteredUsers } from "./use-filtered-users";
-import { useResource } from "@/hooks/use-resource";
+import { useHaloApi } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
-import { HaloIcon } from "@/components/Icons/Halo";
-
-import { ProfileViewer } from "./ProfileViewer";
-import { Paginate } from "@/components/Paginate/Paginate";
 
 export function UsersList({ event }: { event: Events }) {
-  const [users, fetchUsers, error] = useResource<IUser[]>(
-    adminRoutes.eventUsers(event)
-  );
+  const [users, fetchUsers, error] = useHaloApi(listUsers, [event]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!users) return <div>Loading... </div>;
@@ -56,10 +58,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     const name = u.user;
     setNextAction(() => async (reason: string, points: number) => {
       setMessage("Disqualifying");
-      const result = await requests.postJSON(adminRoutes.disqualifyUser(name), {
-        reason,
-        points,
-      }).result;
+      const result = await disqualifyUser(name, { reason, points }).result;
       const { data, error } = result;
       setError(error || "");
       setMessage("");
@@ -76,7 +75,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     setMessage(`Delete ${user} (${name})?`);
     setNextAction(() => async () => {
       setMessage("Deleting..");
-      const result = await requests.get(adminRoutes.deleteUser(user)).result;
+      const result = await deleteUser(user).result;
 
       const { data, error } = result;
       setError(error || "");
@@ -93,7 +92,7 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
     setMessage(`Requalify ${user} (${name})?`);
     setNextAction(() => async () => {
       setMessage("Submitting..");
-      const result = await requests.get(adminRoutes.reQualifyUser(user)).result;
+      const result = await requalifyUser(user).result;
 
       const { data, error } = result;
       setError(error || "");

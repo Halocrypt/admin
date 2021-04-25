@@ -1,17 +1,15 @@
-import { FetchResourceCallback, useResource } from "@/hooks/use-resource";
+import { FetchResourceCallback, useHaloApi } from "@/hooks/use-resource";
 import { resourceContainer, taskWrapper } from "../../DashTasks.style";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { EventDetails } from "./EventDetails";
 import { IEvent } from "@/interfaces";
-import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "./Event.styles";
+import { listEvents } from "@/packages/halo-api/admin";
 
 export function EventList() {
-  const [events, fetchEvents, error] = useResource<IEvent[]>(
-    adminRoutes.getEvents
-  );
+  const [events, fetchEvents, error] = useHaloApi(listEvents, []);
 
   return (
     <AnimateLayout

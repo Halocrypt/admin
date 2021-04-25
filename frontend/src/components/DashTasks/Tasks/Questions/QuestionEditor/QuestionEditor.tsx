@@ -1,5 +1,9 @@
 import { Events, IQuestion, RenderableContent } from "@/interfaces";
-import { actionButton, center } from "@/styles";
+import {
+  QuestionMutation,
+  addQuestion,
+  editQuestion,
+} from "@/packages/halo-api/admin";
 import {
   closeActionContainer,
   editorFields,
@@ -13,11 +17,10 @@ import { FetchResourceCallback } from "@/hooks/use-resource";
 import { NEW_QUESTION_TOKEN } from "../constants";
 import { QuestionDetails } from "../QuestionDetails";
 import { RenderableTypeSelector } from "./RenderableTypeSelector";
-import { adminRoutes } from "@/util/api-routes";
+import { actionButton } from "@/styles";
 import { animInputWrapperClass } from "../Questions.style";
 import { clean } from "@/util/search";
 import { css } from "catom";
-import { requests } from "@/bridge";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 interface QuestionEditorProps {
@@ -87,20 +90,15 @@ export function QuestionEditor({
       question_number,
       question_points,
     } = currentQuestion;
-    const res = await requests.postJSON(
-      isNew
-        ? adminRoutes.addQuestion(event)
-        : adminRoutes.editQuestion(event, question_number),
-      {
-        event,
-        question_content,
-        question_hints: question_hints.filter(
-          (x) => !!(x.content || "").trim()
-        ),
-        question_number,
-        question_points,
-        answer,
-      }
+    const questionBody: QuestionMutation = {
+      question_content,
+      question_hints: question_hints.filter((x) => !!(x.content || "").trim()),
+      question_points,
+      answer,
+    };
+    const res = await (isNew
+      ? addQuestion(event, questionBody)
+      : editQuestion(event, question_number, questionBody)
     ).result;
 
     if (res.error) {

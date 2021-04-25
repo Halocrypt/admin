@@ -5,17 +5,15 @@ import { NEW_QUESTION_TOKEN } from "./constants";
 import { QuestionDetails } from "./QuestionDetails";
 import { QuestionEditor } from "./QuestionEditor/QuestionEditor";
 import { actionButton } from "@/styles";
-import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
+import { listQuestions } from "@/packages/halo-api/admin";
 import { resourceContainer } from "../../DashTasks.style";
 import { useFilteredQuestions } from "./use-filtered-questions";
-import { useResource } from "@/hooks/use-resource";
+import { useHaloApi } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function QuestionsList({ event }: { event: Events }) {
-  const [questions, fetchQuestions, error] = useResource<IQuestion[]>(
-    adminRoutes.listQuestions(event)
-  );
+  const [questions, fetchQuestions, error] = useHaloApi(listQuestions, [event]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!questions) return <div>Loading...</div>;

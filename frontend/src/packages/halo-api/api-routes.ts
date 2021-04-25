@@ -13,15 +13,10 @@ export const userRoutes = {
   register: absoluteURL("/accounts/register/"),
   login: absoluteURL("/accounts/login/"),
   refreshToken: absoluteURL("/accounts/token/refresh/"),
-  whoami: absoluteURL("/accounts/whoami/"),
   userDetails: (user: string) => absoluteURL(`/accounts/${user}/`),
-  sendVerificationEmail: absoluteURL("/accounts/email-verification/send/"),
-  confirmEmail: absoluteURL("/accounts/email-verification/confirm/"),
-  requestNewPassword: (user: string) =>
-    absoluteURL(`/accounts/${user}/password/new/request/`),
-  confirmPasswordToken: (user: string) =>
-    absoluteURL(`/accounts/${user}/password/new/verify/`),
-  editUser: (user: string) => absoluteURL(`/accounts/${user}/edit/`),
+  verificationEmail: absoluteURL("/accounts/email-verification/"),
+  passwordReset: (user: string) =>
+    absoluteURL(`/accounts/${user}/password/new/`),
 };
 
 export const adminRoutes = {
@@ -32,14 +27,14 @@ export const adminRoutes = {
   deleteUser: (user: string) => absoluteURL(`/admin/accounts/${user}/delete/`),
   addQuestion: (event: Events) => absoluteURL(`/admin/${event}/questions/add/`),
   editQuestion: (event: Events, num: number) =>
-    absoluteURL(`/admin/${event}/questions/${num}/edit`),
+    absoluteURL(`/admin/${event}/questions/${num}/`),
   listQuestions: (event: Events) =>
     absoluteURL(`/admin/events/${event}/questions/`),
   getEvents: absoluteURL("/admin/events/"),
-  editEvent: (event: Events) => absoluteURL(`/admin/events/${event}/edit`),
+  editEvent: (event: Events) => absoluteURL(`/admin/events/${event}/`),
   notificationKey: absoluteURL("/admin/notificaton-key/"),
   logserverKey: absoluteURL("/admin/yek-revresgol/"),
-  eventUsers: (event: Events) => absoluteURL(`/admin/${event}/users/`),
+  listUsers: (event: Events) => absoluteURL(`/admin/${event}/users/`),
   getLogs: "https://logs.halocrypt.com/",
   getNotifications: (event: Events) =>
     `https://notifications.halocrypt.com?channel=${event}`,

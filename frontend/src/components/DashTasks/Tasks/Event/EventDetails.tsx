@@ -8,12 +8,12 @@ import {
 
 import { FetchResourceCallback } from "@/hooks/use-resource";
 import { actionButton } from "@/styles";
-import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
 import { dateTimeLocalCompat } from "./util";
+import { editEvent } from "@/packages/halo-api/admin";
 import { fixDate } from "./util";
-import { requests } from "@/bridge";
 import { useState } from "@hydrophobefireman/ui-lib";
+
 interface EditProps {
   event: IEvent;
   close?(): void;
@@ -132,14 +132,14 @@ function Editor({ event, onEdit, close }: EditProps) {
   );
 }
 async function updateEvent(
-  name: string,
+  name: Events,
   startTime: string,
   endTime: string,
   isOver: boolean,
   setError: (s: string) => void,
   onEdit: () => void
 ) {
-  const { result } = requests.postJSON(adminRoutes.editEvent(name as Events), {
+  const { result } = editEvent(name, {
     event_start_time: +new Date(startTime) / 1000,
     event_end_time: +new Date(endTime) / 1000,
     is_over: isOver,

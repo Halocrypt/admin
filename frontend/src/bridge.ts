@@ -1,6 +1,6 @@
 import { Bridge } from "@hydrophobefireman/flask-jwt-jskit";
 import { IUser } from "./interfaces";
-import { userRoutes } from "./util/api-routes";
+import { userRoutes } from "./packages/halo-api/api-routes";
 
 const client = new Bridge<IUser>(null);
 

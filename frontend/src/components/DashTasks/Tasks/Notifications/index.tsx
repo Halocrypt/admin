@@ -1,9 +1,11 @@
-import { Events, IEvent, INotification } from "@/interfaces";
+import { Events, INotification } from "@/interfaces";
 import {
-  notificationDeleteBox,
-  notificationItem,
-} from "./Notifications.styles";
+  deleteNotification,
+  getNotificationKey,
+  listEvents,
+} from "@/packages/halo-api/admin";
 import { resourceContainer, taskWrapper } from "../../DashTasks.style";
+import { useHaloApi, useResource } from "@/hooks/use-resource";
 
 import { AddNotification } from "./AddNotification";
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
@@ -11,16 +13,14 @@ import { EventSelector } from "../../EventSelector";
 import { ModalLayout } from "@/components/Modal";
 import { NotificationViewer } from "./NotificationViewer";
 import { actionButton } from "@/styles";
-import { adminRoutes } from "@/util/api-routes";
+import { adminRoutes } from "@/packages/halo-api/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
-import { requests } from "@/bridge";
-import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Notifications() {
-  const [events, _, eventError] = useResource<IEvent[]>(adminRoutes.getEvents);
-  const [key, __, keyError] = useResource<string>(adminRoutes.notificationKey);
+  const [events, _, eventError] = useHaloApi(listEvents);
+  const [key, __, keyError] = useHaloApi(getNotificationKey);
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
   return (
     <AnimateLayout
@@ -84,11 +84,8 @@ function NotificationRenderer({
   async function deleteNotif() {
     if (message) return;
     setMessage("deleting..");
-    const res = await requests.postJSON(
-      adminRoutes.deleteNotification(event),
-      { ts: confirm.ts },
-      { "x-access-key": accessKey }
-    ).result;
+    const res = await deleteNotification({ event, ts: confirm.ts, accessKey })
+      .result;
     const { error, data } = res;
     setError(error || "");
     if (data) {

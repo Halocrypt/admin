@@ -1,3 +1,4 @@
+import { EditUserProps, editUser } from "@/packages/halo-api/user";
 import { actionButton, center } from "@/styles";
 import { profileContents, profileViewer } from "./Users.style";
 import { useRef, useState } from "@hydrophobefireman/ui-lib";
@@ -10,10 +11,8 @@ import { IUser } from "@/interfaces";
 import { css } from "catom";
 import { fixDate } from "../Event/util";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
-import { requests } from "@/bridge";
 import { useOverflowHidden } from "./use-overflow-hidden";
 import { usePropVal } from "./use-prop-val";
-import { userRoutes } from "@/util/api-routes";
 
 interface ProfileViewerProps {
   user: IUser;
@@ -51,7 +50,7 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
     if (message) return;
     resetMessages();
     ref.current && ref.current.scroll({ behavior: "smooth", top: 0 });
-    const body = {
+    const body: EditUserProps = {
       name,
       points,
       level,
@@ -59,8 +58,7 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
       institution: inst,
     };
     setMessage("Saving..");
-    const res = await requests.postJSON(userRoutes.editUser(user.user), body)
-      .result;
+    const res = await editUser(user.user, body).result;
     const { data, error } = res;
     setError(error || "");
     if (data) {

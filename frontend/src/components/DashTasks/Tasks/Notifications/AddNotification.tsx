@@ -1,5 +1,4 @@
 import { Events, INotification, RenderableContent } from "@/interfaces";
-import { client, requests } from "@/bridge";
 import { closeActionContainer, editorRoot } from "../Editor.styles.ts";
 
 import { AnimatedInput } from "@/components/AnimatedInput";
@@ -8,7 +7,8 @@ import { FetchResourceCallback } from "@/hooks/use-resource";
 import { NotificationViewer } from "./NotificationViewer";
 import { RenderableTypeSelector } from "../Questions/QuestionEditor/RenderableTypeSelector";
 import { actionButton } from "@/styles";
-import { adminRoutes } from "@/util/api-routes";
+import { addNotification } from "@/packages/halo-api/admin";
+import { client } from "@/bridge";
 import { css } from "catom";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { useInterval } from "@/hooks/use-interval";
@@ -44,11 +44,7 @@ export function AddNotification({
     };
     setError("");
     setMessage("Adding...");
-    const result = await requests.postJSON(
-      adminRoutes.addNotification(event),
-      body,
-      { "x-access-key": accessKey }
-    ).result;
+    const result = await addNotification({ event, body, accessKey }).result;
     const { data, error } = result;
     setError(error || "");
     if (data) {

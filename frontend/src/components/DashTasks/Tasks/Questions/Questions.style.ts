@@ -14,6 +14,7 @@ export const questionBox = css({
   padding: "2rem",
   paddingTop: "0.5rem",
   textAlign: "center",
+  minWidth: "300px",
   // border: "2px solid var(--font)",
 
   media: {

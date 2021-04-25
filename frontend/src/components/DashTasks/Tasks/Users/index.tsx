@@ -1,17 +1,16 @@
-import { Events, IEvent } from "@/interfaces";
-
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { EventSelector } from "../../EventSelector";
+import { Events } from "@/interfaces";
 import { UsersList } from "./UsersList";
-import { adminRoutes } from "@/util/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
+import { listEvents } from "@/packages/halo-api/admin";
 import { taskWrapper } from "../../DashTasks.style";
-import { useResource } from "@/hooks/use-resource";
+import { useHaloApi } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Users() {
-  const [events, _, error] = useResource<IEvent[]>(adminRoutes.getEvents);
+  const [events, _, error] = useHaloApi(listEvents);
 
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
 

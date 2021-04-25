@@ -1,22 +1,22 @@
 import { actionButton, center } from "@/styles";
-import { fixDate, readableDate } from "../Event/util";
+import { useHaloApi, useResource } from "@/hooks/use-resource";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { AnimatedInput } from "@/components/AnimatedInput";
 import { Log } from "@/interfaces";
-import { adminRoutes } from "@/util/api-routes";
+import { Paginate } from "@/components/Paginate/Paginate";
+import { adminRoutes } from "@/packages/halo-api/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
+import { getLogKey } from "@/packages/halo-api/admin";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
-
+import { readableDate } from "../Event/util";
 import { taskWrapper } from "../../DashTasks.style";
-import { useResource } from "@/hooks/use-resource";
-import { useState } from "@hydrophobefireman/ui-lib";
 import { useFilteredLogs } from "./use-filtered-logs";
-import { Paginate } from "@/components/Paginate/Paginate";
+import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Logs() {
-  const [key, _, keyError] = useResource<string>(adminRoutes.logserverKey);
+  const [key, _, keyError] = useHaloApi(getLogKey);
   return (
     <AnimateLayout
       onlyInitial
