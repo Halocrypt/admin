@@ -1059,10 +1059,10 @@
   resolved "https://registry.yarnpkg.com/@discoveryjs/json-ext/-/json-ext-0.5.2.tgz#8f03a22a04de437254e8ce8cc84ba39689288752"
   integrity sha512-HyYEUDeIj5rRQU2Hk5HTB2uHsbRQpF70nvMhVzi+VJR0X+xNEhjPui4/kBf3VeH/wqD28PT4sVOm8qqLjBrSZg==
 
-"@hydrophobefireman/flask-jwt-jskit@^0.1.0":
-  version "0.1.0"
-  resolved "https://registry.yarnpkg.com/@hydrophobefireman/flask-jwt-jskit/-/flask-jwt-jskit-0.1.0.tgz#dd93eeadd252d2d0fdbd330ed6644896c0da0332"
-  integrity sha512-MMM+r7YfFcArudZ4VRX21AnKkGzL3DNK3kRH+dSMCIoUahmzmRgieVBk2O/ZMMRHOZBdmG5zNPg/S9u1r6HcAg==
+"@hydrophobefireman/flask-jwt-jskit@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@hydrophobefireman/flask-jwt-jskit/-/flask-jwt-jskit-0.1.1.tgz#f04edbf91f704e74cd4945751ab8676c4c175e47"
+  integrity sha512-QxxpfBiWt2C/u5WFIryXZuH/EcPXw6gXgtmCxXYWEg0kXeiv0qTI3v8R2U9YNwe9UC4ppCWocapAht1ouC65lQ==
 
 "@hydrophobefireman/j-utils@^2.1.6":
   version "2.1.6"

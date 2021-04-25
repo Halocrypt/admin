@@ -1,11 +1,11 @@
-import { client } from "@/bridge";
-
 import {
   redirect,
   useEffect,
   useRef,
   useRoute,
 } from "@hydrophobefireman/ui-lib";
+
+import { client } from "@/bridge";
 import { useSharedState } from "statedrive";
 
 export function useAuthRedirect() {
