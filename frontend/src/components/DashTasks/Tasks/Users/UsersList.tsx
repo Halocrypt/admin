@@ -19,11 +19,11 @@ import { css } from "catom";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { resourceContainer } from "../../DashTasks.style";
 import { useFilteredUsers } from "./use-filtered-users";
-import { useHaloApi } from "@/hooks/use-resource";
+import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function UsersList({ event }: { event: Events }) {
-  const [users, fetchUsers, error] = useHaloApi(listUsers, [event]);
+  const [users, fetchUsers, error] = useResource(listUsers, [event]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!users) return <div>Loading... </div>;

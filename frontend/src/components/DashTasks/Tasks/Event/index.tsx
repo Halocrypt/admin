@@ -1,4 +1,4 @@
-import { FetchResourceCallback, useHaloApi } from "@/hooks/use-resource";
+import { FetchResourceCallback, useResource } from "@/hooks/use-resource";
 import { resourceContainer, taskWrapper } from "../../DashTasks.style";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
@@ -9,7 +9,7 @@ import { eventHeadWrapper } from "./Event.styles";
 import { listEvents } from "@/packages/halo-api/admin";
 
 export function EventList() {
-  const [events, fetchEvents, error] = useHaloApi(listEvents, []);
+  const [events, fetchEvents, error] = useResource(listEvents, []);
 
   return (
     <AnimateLayout

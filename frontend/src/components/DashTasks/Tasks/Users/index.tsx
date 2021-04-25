@@ -6,11 +6,11 @@ import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
 import { listEvents } from "@/packages/halo-api/admin";
 import { taskWrapper } from "../../DashTasks.style";
-import { useHaloApi } from "@/hooks/use-resource";
+import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Users() {
-  const [events, _, error] = useHaloApi(listEvents);
+  const [events, _, error] = useResource(listEvents);
 
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
 

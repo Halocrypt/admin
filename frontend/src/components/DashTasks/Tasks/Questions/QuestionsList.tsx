@@ -9,11 +9,13 @@ import { css } from "catom";
 import { listQuestions } from "@/packages/halo-api/admin";
 import { resourceContainer } from "../../DashTasks.style";
 import { useFilteredQuestions } from "./use-filtered-questions";
-import { useHaloApi } from "@/hooks/use-resource";
+import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function QuestionsList({ event }: { event: Events }) {
-  const [questions, fetchQuestions, error] = useHaloApi(listQuestions, [event]);
+  const [questions, fetchQuestions, error] = useResource(listQuestions, [
+    event,
+  ]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!questions) return <div>Loading...</div>;

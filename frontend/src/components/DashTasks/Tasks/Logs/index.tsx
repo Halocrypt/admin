@@ -1,22 +1,20 @@
 import { actionButton, center } from "@/styles";
-import { useHaloApi, useResource } from "@/hooks/use-resource";
+import { getLogKey, getLogs } from "@/packages/halo-api/admin";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
 import { AnimatedInput } from "@/components/AnimatedInput";
-import { Log } from "@/interfaces";
 import { Paginate } from "@/components/Paginate/Paginate";
-import { adminRoutes } from "@/packages/halo-api/api-routes";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
-import { getLogKey } from "@/packages/halo-api/admin";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
 import { readableDate } from "../Event/util";
 import { taskWrapper } from "../../DashTasks.style";
 import { useFilteredLogs } from "./use-filtered-logs";
+import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Logs() {
-  const [key, _, keyError] = useHaloApi(getLogKey);
+  const [key, _, keyError] = useResource(getLogKey);
   return (
     <AnimateLayout
       onlyInitial
@@ -44,9 +42,7 @@ export function Logs() {
 
 function LogViewer({ accessKey }: { accessKey: string }) {
   const [search, setSearch] = useState("");
-  const [fetchedLogs, _, error] = useResource<Log[]>(adminRoutes.getLogs, {
-    "x-access-key": accessKey,
-  });
+  const [fetchedLogs, _, error] = useResource(getLogs);
   const logs = useFilteredLogs(fetchedLogs, search);
   if (!fetchedLogs) return <div>Fetching...</div>;
   return (

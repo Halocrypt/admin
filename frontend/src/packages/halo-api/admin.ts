@@ -1,4 +1,4 @@
-import { IEvent, IQuestion, IUser } from "@/interfaces";
+import { IEvent, INotification, IQuestion, IUser, Log } from "@/interfaces";
 import { adminRoutes, userRoutes } from "@/packages/halo-api/api-routes";
 
 import { requests } from "@/bridge";
@@ -64,30 +64,31 @@ export function getLogKey() {
   return requests.get<string>(adminRoutes.logserverKey);
 }
 
-export function deleteNotification({
-  event,
-  ts,
-  accessKey,
-}: {
+export function getLogs() {
+  return requests.get<Log[]>(adminRoutes.getLogs);
+}
+
+export function getNotifications(event: Events) {
+  return requests.get<INotification[]>(adminRoutes.getNotifications(event));
+}
+interface DeleteNotifProps {
   event: Events;
   ts: number;
   accessKey: string;
-}) {
+}
+export function deleteNotification({ event, ts, accessKey }: DeleteNotifProps) {
   return requests.postJSON(
     adminRoutes.deleteNotification(event),
     { ts },
     { "x-access-key": accessKey }
   );
 }
-export function addNotification({
-  event,
-  accessKey,
-  body,
-}: {
+interface AddNotifProps {
   event: Events;
   body: any;
   accessKey: string;
-}) {
+}
+export function addNotification({ event, accessKey, body }: AddNotifProps) {
   return requests.postJSON(adminRoutes.addNotification(event), body, {
     "x-access-key": accessKey,
   });
