@@ -4,18 +4,23 @@ import { useEffect, useState } from "@hydrophobefireman/ui-lib";
 import { Log } from "@/interfaces";
 import { raf } from "@/util/raf";
 
-export function useFilteredLogs(logs: Log[], query: string) {
+export function useFilteredLogs(
+  logs: Log[],
+  query: string,
+  filterType: "all" | "correct" | "incorrect"
+) {
   const [filteredLogs, setFilteredLogs] = useState(logs);
   useEffect(() => {
     raf(() => {
       if (!logs) return;
-      if (!clean(query)) return setFilteredLogs(logs);
       setFilteredLogs(
         logs.filter((x) => {
-          return contains(x[0], query);
+          const f = !query || contains(x[0], query);
+          if (filterType === "all") return f;
+          return f && (filterType === "correct" ? x[3] : !x[3]);
         })
       );
     });
-  }, [logs, query]);
+  }, [logs, query, filterType]);
   return filteredLogs;
 }

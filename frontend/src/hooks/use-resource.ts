@@ -14,7 +14,7 @@ export function useResource<
   R extends boolean = true
 >(
   func: T,
-  args: Parameters<T> = [] as any
+  args: Parameters<T>
 ): [
   PromiseResponse<ReturnType<T>["result"]>["data"],
   FetchResourceCallback<R>,

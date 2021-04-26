@@ -1,4 +1,5 @@
 import { actionButton, center } from "@/styles";
+import { filterBox, filterButton } from "./logs.style";
 import { getLogKey, getLogs } from "@/packages/halo-api/admin";
 
 import { AnimateLayout } from "@hydrophobefireman/ui-anim";
@@ -14,7 +15,7 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Logs() {
-  const [key, _, keyError] = useResource(getLogKey);
+  const [key, _, keyError] = useResource(getLogKey, []);
   return (
     <AnimateLayout
       onlyInitial
@@ -40,10 +41,19 @@ export function Logs() {
   );
 }
 
+const activeCss = { background: "var(--fg)", color: "var(--font)" };
+const inactiveCss = { background: "var(--alpha)" };
 function LogViewer({ accessKey }: { accessKey: string }) {
   const [search, setSearch] = useState("");
-  const [fetchedLogs, _, error] = useResource(getLogs);
-  const logs = useFilteredLogs(fetchedLogs, search);
+  const [fetchedLogs, _, error] = useResource(getLogs, [accessKey]);
+  const [filterType, setFilterType] = useState<"all" | "correct" | "incorrect">(
+    "all"
+  );
+  function handleClick(e: JSX.TargetedMouseEvent<HTMLButtonElement>) {
+    const { currentTarget } = e;
+    setFilterType(currentTarget.dataset.filter as any);
+  }
+  const logs = useFilteredLogs(fetchedLogs, search, filterType);
   if (!fetchedLogs) return <div>Fetching...</div>;
   return (
     <div>
@@ -56,6 +66,32 @@ function LogViewer({ accessKey }: { accessKey: string }) {
         />
       </div>
       <div class={css({ color: "red" })}>{error}</div>
+      <div class={filterBox}>
+        <button
+          class={filterButton}
+          data-filter="all"
+          onClick={handleClick}
+          style={filterType === "all" ? activeCss : inactiveCss}
+        >
+          All
+        </button>
+        <button
+          class={filterButton}
+          data-filter="correct"
+          onClick={handleClick}
+          style={filterType === "correct" ? activeCss : inactiveCss}
+        >
+          Correct
+        </button>
+        <button
+          class={filterButton}
+          data-filter="incorrect"
+          onClick={handleClick}
+          style={filterType === "incorrect" ? activeCss : inactiveCss}
+        >
+          Incorrect
+        </button>
+      </div>
       <div>
         {logs && (
           <Paginate
@@ -69,7 +105,9 @@ function LogViewer({ accessKey }: { accessKey: string }) {
             })}
             buttonClass={actionButton}
             render={([user, question, answer, isCorrect, timeStamp]) => (
-              <div
+              <AnimateLayout
+                animId={timeStamp + ""}
+                element="div"
                 style={isCorrect ? { borderColor: "green" } : null}
                 class={css({
                   padding: "1rem",
@@ -77,6 +115,7 @@ function LogViewer({ accessKey }: { accessKey: string }) {
                   margin: ".5rem",
                   borderRadius: "5px",
                   border: "2px solid transparent",
+                  background: "var(--bg)",
                 })}
               >
                 <div>
@@ -92,7 +131,7 @@ function LogViewer({ accessKey }: { accessKey: string }) {
                 <div class={css({ textAlign: "right", fontSize: ".8rem" })}>
                   {readableDate(timeStamp)}
                 </div>
-              </div>
+              </AnimateLayout>
             )}
             dualButtons={true}
           />
