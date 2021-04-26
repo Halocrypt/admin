@@ -19,8 +19,8 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Notifications() {
-  const [events, _, eventError] = useResource(listEvents);
-  const [key, __, keyError] = useResource(getNotificationKey);
+  const [events, _, eventError] = useResource(listEvents, []);
+  const [key, __, keyError] = useResource(getNotificationKey, []);
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
   return (
     <AnimateLayout
