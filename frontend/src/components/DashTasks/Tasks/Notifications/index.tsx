@@ -3,7 +3,6 @@ import {
   deleteNotification,
   getNotificationKey,
   getNotifications,
-  listEvents,
 } from "@/packages/halo-api/admin";
 import { resourceContainer, taskWrapper } from "../../DashTasks.style";
 
@@ -15,6 +14,7 @@ import { NotificationViewer } from "./NotificationViewer";
 import { actionButton } from "@/styles";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
+import { listEvents } from "@/packages/halo-api/play";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 

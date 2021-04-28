@@ -1,3 +1,4 @@
+import { IEvent } from "@/interfaces";
 import { playRoutes } from "@/packages/halo-api/api-routes";
 import { requests } from "@/bridge";
 
@@ -12,4 +13,8 @@ export function getQuestion(event: Events) {
 
 export function answer(event: Events, body: { answer: string }) {
   return requests.postJSON(playRoutes.answer(event), body);
+}
+
+export function listEvents() {
+  return requests.get<IEvent[]>(playRoutes.getEvents);
 }

@@ -6,7 +6,7 @@ import { EventDetails } from "./EventDetails";
 import { IEvent } from "@/interfaces";
 import { css } from "catom";
 import { eventHeadWrapper } from "./Event.styles";
-import { listEvents } from "@/packages/halo-api/admin";
+import { listEvents } from "@/packages/halo-api/play";
 
 export function EventList() {
   const [events, fetchEvents, error] = useResource(listEvents, []);

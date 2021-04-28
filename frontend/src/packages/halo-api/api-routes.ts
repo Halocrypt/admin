@@ -30,7 +30,6 @@ export const adminRoutes = {
     absoluteURL(`/admin/${event}/questions/${num}/`),
   listQuestions: (event: Events) =>
     absoluteURL(`/admin/events/${event}/questions/`),
-  getEvents: absoluteURL("/admin/events/"),
   editEvent: (event: Events) => absoluteURL(`/admin/events/${event}/`),
   notificationKey: absoluteURL("/admin/notificaton-key/"),
   logserverKey: absoluteURL("/admin/yek-revresgol/"),
@@ -49,4 +48,5 @@ export const playRoutes = {
   question: (event: Events) => absoluteURL(`/play/${event}/question/`),
   answer: (event: Events) => absoluteURL(`/play/${event}/answer/`),
   userCount: (event: Events) => absoluteURL(`/play/${event}/user-count/`),
+  getEvents: absoluteURL("/play/events/"),
 };

@@ -4,7 +4,7 @@ import { Events } from "@/interfaces";
 import { QuestionsList } from "./QuestionsList";
 import { css } from "catom";
 import { eventHeadWrapper } from "../Event/Event.styles";
-import { listEvents } from "@/packages/halo-api/admin";
+import { listEvents } from "@/packages/halo-api/play";
 import { taskWrapper } from "../../DashTasks.style";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";

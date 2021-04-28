@@ -1,4 +1,4 @@
-import { IEvent, INotification, IQuestion, IUser, Log } from "@/interfaces";
+import {  INotification, IQuestion, IUser, Log } from "@/interfaces";
 import { adminRoutes, userRoutes } from "@/packages/halo-api/api-routes";
 
 import { requests } from "@/bridge";
@@ -43,10 +43,6 @@ export function editQuestion(
 
 export function listQuestions(event: Events) {
   return requests.get<IQuestion[]>(adminRoutes.listQuestions(event));
-}
-
-export function listEvents() {
-  return requests.get<IEvent[]>(adminRoutes.getEvents);
 }
 
 export function editEvent(
