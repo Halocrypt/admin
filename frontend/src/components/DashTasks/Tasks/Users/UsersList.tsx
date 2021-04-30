@@ -12,7 +12,7 @@ import { Form } from "@/components/Form";
 import { HaloIcon } from "@/components/Icons/Halo";
 import { ModalLayout } from "@/components/Modal";
 import { Paginate } from "@/components/Paginate/Paginate";
-import { ProfileViewer } from "./ProfileViewer";
+import { ProfileViewerWithContent } from "@/pages/ProfileViewer";
 import { actionButton } from "@/styles";
 import { client } from "@/bridge";
 import { css } from "catom";
@@ -23,14 +23,21 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function UsersList({ event }: { event: Events }) {
-  const [users, fetchUsers, error] = useResource(listUsers, [event]);
+  const [users, fetchUsers, error, setUsers] = useResource(listUsers, [event]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!users) return <div>Loading... </div>;
-  return <UserRenderer event={event} fetchUsers={fetchUsers} users={users} />;
+  return (
+    <UserRenderer
+      event={event}
+      fetchUsers={fetchUsers}
+      users={users}
+      setUsers={setUsers}
+    />
+  );
 }
 
-function UserRenderer({ fetchUsers, users }: RendererProps) {
+function UserRenderer({ fetchUsers, users, setUsers }: RendererProps) {
   const [search, setSearch] = useState("");
   const filteredUsers = useFilteredUsers(users, search);
   const [message, setMessage] = useState(null);
@@ -104,10 +111,13 @@ function UserRenderer({ fetchUsers, users }: RendererProps) {
   const me = client.getState().user;
   if (profView)
     return (
-      <ProfileViewer
+      <ProfileViewerWithContent
         close={() => setProfView(null)}
         user={profView}
-        fetchUsers={fetchUsers}
+        onUpdate={(newProf) => {
+          const currentId = newProf._id;
+          setUsers(users.map((x) => (x._id === currentId ? newProf : x)));
+        }}
       />
     );
   return (

@@ -1,5 +1,6 @@
 import { client, requests } from "@/bridge";
 
+import { IUser } from "@/interfaces";
 import { RegisterUser } from "./interfaces";
 import { userRoutes } from "@/packages/halo-api/api-routes";
 
@@ -10,7 +11,7 @@ export function register(user: RegisterUser) {
 export const login = client.login.bind(client);
 
 export function userDetails(user: string) {
-  return requests.get(userRoutes.userDetails(user));
+  return requests.get<{ user_data: IUser }>(userRoutes.userDetails(user));
 }
 
 export type EditUserProps = Partial<
@@ -21,7 +22,7 @@ export type EditUserProps = Partial<
 >;
 
 export function editUser(user: string, props: EditUserProps) {
-  return requests.patchJSON(userRoutes.userDetails(user), props);
+  return requests.patchJSON<IUser>(userRoutes.userDetails(user), props);
 }
 
 export function sendVerificationEmail(handler: string) {

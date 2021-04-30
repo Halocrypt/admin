@@ -18,6 +18,7 @@ const componentMap = {
   "/no": () => import("@/pages/No").then(getDefault),
   "/dash": () => import("@/pages/Dash").then(getDefault),
   "/dash/:task": () => import("@/pages/Dash").then(getDefault),
+  "/dash/users/:user": () => import("@/pages/ProfileViewer").then(getDefault),
 };
 
 export function RouteLoader() {

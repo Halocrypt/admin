@@ -1,25 +1,32 @@
-import { EditUserProps, editUser } from "@/packages/halo-api/user";
+import { A, useRef, useState } from "@hydrophobefireman/ui-lib";
+import { EditUserProps, editUser, userDetails } from "@/packages/halo-api/user";
 import { actionButton, center } from "@/styles";
-import { profileContents, profileViewer } from "./Users.style";
-import { useRef, useState } from "@hydrophobefireman/ui-lib";
+import {
+  profileContents,
+  profileViewer,
+} from "../../components/DashTasks/Tasks/Users/Users.style";
 
 import { AnimatedInput } from "@/components/AnimatedInput";
 import { BackArrowIcon } from "@/components/Icons/BackArrow";
-import { FetchResourceCallback } from "@/hooks/use-resource";
 import { HaloIcon } from "@/components/Icons/Halo";
 import { IUser } from "@/interfaces";
 import { css } from "catom";
-import { fixDate } from "../Event/util";
+import { fixDate } from "../../components/DashTasks/Tasks/Event/util";
 import { inputWrapperClass } from "@/components/SignIn/inputWrapperClass";
-import { useOverflowHidden } from "./use-overflow-hidden";
-import { usePropVal } from "./use-prop-val";
+import { useOverflowHidden } from "../../components/DashTasks/Tasks/Users/use-overflow-hidden";
+import { usePropVal } from "../../components/DashTasks/Tasks/Users/use-prop-val";
+import { useResource } from "@/hooks/use-resource";
 
 interface ProfileViewerProps {
   user: IUser;
-  close(): void;
-  fetchUsers: FetchResourceCallback<true>;
+  close?(): void;
+  onUpdate?(newUser: IUser): void;
 }
-export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
+export function ProfileViewerWithContent({
+  user,
+  close,
+  onUpdate,
+}: ProfileViewerProps) {
   useOverflowHidden();
   const [name, setName] = usePropVal(user.name);
   const [points, setPoints] = usePropVal(user.points);
@@ -59,19 +66,22 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
     };
     setMessage("Saving..");
     const res = await editUser(user.user, body).result;
-    const { data, error } = res;
+    const { error, data } = res;
     setError(error || "");
-    if (data) {
-      setMessage("Syncing..");
-      const fetching = fetchUsers(true);
-      fetching.then(close);
-    }
+    setMessage("");
+    onUpdate && onUpdate(data);
   }
   return (
     <div class={profileViewer} ref={ref}>
-      <button onClick={close}>
-        <BackArrowIcon />
-      </button>
+      {close ? (
+        <button onClick={close}>
+          <BackArrowIcon />
+        </button>
+      ) : (
+        <A href="/dash/users">
+          <BackArrowIcon />
+        </A>
+      )}
       <h1 class={css({ margin: "auto", textAlign: "center" })}>
         {isDisQualified ? (
           "Disqualified User"
@@ -174,4 +184,11 @@ export function ProfileViewer({ close, user, fetchUsers }: ProfileViewerProps) {
       </div>
     </div>
   );
+}
+
+export default function ProfileViewer({ params }) {
+  const [user, _, error] = useResource(userDetails, [params.user]);
+  if (error) return error;
+  if (user) return <ProfileViewerWithContent user={user.user_data} />;
+  return <div>Loading...</div>;
 }
