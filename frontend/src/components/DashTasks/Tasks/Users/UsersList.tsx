@@ -23,7 +23,12 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function UsersList({ event }: { event: Events }) {
-  const [users, fetchUsers, error, setUsers] = useResource(listUsers, [event]);
+  const {
+    resp: users,
+    fetchResource: fetchUsers,
+    error,
+    setResp: setUsers,
+  } = useResource(listUsers, [event]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!users) return <div>Loading... </div>;

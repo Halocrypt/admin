@@ -19,8 +19,8 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Notifications() {
-  const [events, _, eventError] = useResource(listEvents, []);
-  const [key, __, keyError] = useResource(getNotificationKey, []);
+  const { resp: events, error: eventError } = useResource(listEvents, []);
+  const { resp: key, error: keyError } = useResource(getNotificationKey, []);
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
   return (
     <AnimateLayout
@@ -63,9 +63,11 @@ function NotificationRenderer({
   accessKey: string;
   event: Events;
 }) {
-  const [notifs, fetchNotifs, fetchError] = useResource(getNotifications, [
-    event,
-  ]);
+  const {
+    resp: notifs,
+    fetchResource: fetchNotifs,
+    error: fetchError,
+  } = useResource(getNotifications, [event]);
   const [error, setError] = useState("");
   const [message, setMessage] = useState("");
   const [confirm, setConfirm] = useState<INotification>(null);

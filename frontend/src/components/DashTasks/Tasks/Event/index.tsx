@@ -9,7 +9,10 @@ import { eventHeadWrapper } from "./Event.styles";
 import { listEvents } from "@/packages/halo-api/play";
 
 export function EventList() {
-  const [events, fetchEvents, error] = useResource(listEvents, []);
+  const { resp: events, fetchResource: fetchEvents, error } = useResource(
+    listEvents,
+    []
+  );
 
   return (
     <AnimateLayout

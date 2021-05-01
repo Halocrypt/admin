@@ -15,7 +15,7 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Logs() {
-  const [key, _, keyError] = useResource(getLogKey, []);
+  const { resp: key, error: keyError } = useResource(getLogKey, []);
   return (
     <AnimateLayout
       onlyInitial
@@ -45,7 +45,7 @@ const activeCss = { background: "var(--fg)", color: "var(--font)" };
 const inactiveCss = { background: "var(--alpha)" };
 function LogViewer({ accessKey }: { accessKey: string }) {
   const [search, setSearch] = useState("");
-  const [fetchedLogs, _, error] = useResource(getLogs, [accessKey]);
+  const { resp: fetchedLogs, error } = useResource(getLogs, [accessKey]);
   const [filterType, setFilterType] = useState<"all" | "correct" | "incorrect">(
     "all"
   );

@@ -187,7 +187,7 @@ export function ProfileViewerWithContent({
 }
 
 export default function ProfileViewer({ params }) {
-  const [user, _, error] = useResource(userDetails, [params.user]);
+  const { resp: user, error } = useResource(userDetails, [params.user]);
   if (error) return error;
   if (user) return <ProfileViewerWithContent user={user.user_data} />;
   return <div>Loading...</div>;

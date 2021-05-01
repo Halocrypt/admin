@@ -10,7 +10,7 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Users() {
-  const [events, _, error] = useResource(listEvents, []);
+  const { resp: events, error } = useResource(listEvents, []);
 
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
 

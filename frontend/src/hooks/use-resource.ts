@@ -12,17 +12,9 @@ export type PromiseResponse<T> = T extends Promise<infer U> ? U : T;
 export function useResource<
   T extends (...args: any) => AbortableFetchResponse<any>,
   R extends boolean = true
->(
-  func: T,
-  args: Parameters<T>
-): [
-  PromiseResponse<ReturnType<T>["result"]>["data"],
-  FetchResourceCallback<R>,
-  string,
-  (update: PromiseResponse<ReturnType<T>["result"]>["data"]) => void,
-  () => void
-] {
-  const [resp, setResp] = useState<any>(null);
+>(func: T, args: Parameters<T>) {
+  type Ret = PromiseResponse<ReturnType<T>["result"]>["data"];
+  const [resp, setResp] = useState<Ret>(null);
   const [error, setError] = useState("");
   function clearError() {
     setError(null);
@@ -44,5 +36,5 @@ export function useResource<
     >;
   }
   useEffect(fetchResource, args);
-  return [resp, fetchResource, error, setResp, clearError];
+  return { resp, fetchResource, error, setResp, clearError } as const;
 }
