@@ -30,6 +30,7 @@ export function AddNotification({
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [content, setContent] = useState("");
+  const [title, setTitle] = useState("");
   const [contentType, setContentType] = useState<RenderableContent["type"]>(
     "text"
   );
@@ -41,6 +42,7 @@ export function AddNotification({
       ts,
       content: { content, type: contentType },
       issuedBy: user,
+      title,
     };
     setError("");
     setMessage("Adding...");
@@ -69,12 +71,19 @@ export function AddNotification({
       <div>
         <NotificationViewer
           notification={{
+            title,
             content: { type: contentType, content },
             issuedBy: user,
             ts,
           }}
         />
       </div>
+      <AnimatedInput
+        value={title}
+        onInput={setTitle}
+        labelText="Title"
+        wrapperClass={inputWrapperClass}
+      />
       <AnimatedInput
         value={content}
         onInput={setContent}

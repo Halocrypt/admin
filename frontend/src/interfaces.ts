@@ -32,6 +32,7 @@ export interface INotification {
   ts: number;
   content: RenderableContent;
   issuedBy: string;
+  title: string;
 }
 
 export interface IQuestion {
