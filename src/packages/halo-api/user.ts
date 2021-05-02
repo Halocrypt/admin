@@ -5,7 +5,7 @@ import { RegisterUser } from "./interfaces";
 import { userRoutes } from "@/packages/halo-api/api-routes";
 
 export function register(user: RegisterUser) {
-  return requests.postJSON(userRoutes.register, user);
+  return requests.postJSON<IUser>(userRoutes.register, user);
 }
 
 export const login = client.login.bind(client);

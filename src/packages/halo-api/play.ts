@@ -9,19 +9,24 @@ export function getLeaderboard(event: Events) {
 }
 
 export function getQuestion(event: Events) {
-  return requests.get<IQuestion[]>(playRoutes.question(event));
+  return requests.get<
+    | IQuestion
+    | { disqualified: boolean; disqualification_reason: string }
+    | { game_over: boolean }
+  >(playRoutes.question(event));
 }
 
 export function answer(event: Events, body: { answer: string }) {
-  return requests.postJSON<{ is_correct: boolean; game_over?: boolean }>(
-    playRoutes.answer(event),
-    body
-  );
+  return requests.postJSON<{
+    is_correct: boolean;
+    game_over?: boolean;
+    disqualified?: boolean;
+    reason?: string;
+  }>(playRoutes.answer(event), body);
 }
 export function getNotifications(event: Events) {
   return requests.get<INotification[]>(playRoutes.getNotifications(event));
 }
-
 export function listEvents() {
   return requests.get<IEvent[]>(playRoutes.getEvents);
 }
