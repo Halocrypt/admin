@@ -1,9 +1,5 @@
 import { Events, INotification } from "@/interfaces";
-import {
-  deleteNotification,
-  getNotificationKey,
-  getNotifications,
-} from "@/packages/halo-api/admin";
+import { getNotifications, listEvents } from "@/packages/halo-api/play";
 import { resourceContainer, taskWrapper } from "../../DashTasks.style";
 
 import { AddNotification } from "./AddNotification";
@@ -13,14 +9,13 @@ import { ModalLayout } from "@/components/Modal";
 import { NotificationViewer } from "./NotificationViewer";
 import { actionButton } from "@/styles";
 import { css } from "catom";
+import { deleteNotification } from "@/packages/halo-api/admin";
 import { eventHeadWrapper } from "../Event/Event.styles";
-import { listEvents } from "@/packages/halo-api/play";
 import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Notifications() {
   const { resp: events, error: eventError } = useResource(listEvents, []);
-  const { resp: key, error: keyError } = useResource(getNotificationKey, []);
   const [selectedEvent, setSelectedEvent] = useState<Events>(null);
   return (
     <AnimateLayout
@@ -30,12 +25,11 @@ export function Notifications() {
       class={taskWrapper}
     >
       <h2 class={eventHeadWrapper}>Notifications </h2>
-      {!events || !key ? (
+      {!events ? (
         <div>
-          {eventError || keyError ? (
+          {eventError ? (
             <>
               <div class={css({ color: "red" })}>{eventError}</div>
-              <div class={css({ color: "red" })}>{keyError}</div>
             </>
           ) : (
             "Loading.."
@@ -47,22 +41,14 @@ export function Notifications() {
             events={events}
             setEvent={(e) => setSelectedEvent(e)}
           />
-          {selectedEvent && (
-            <NotificationRenderer event={selectedEvent} accessKey={key} />
-          )}
+          {selectedEvent && <NotificationRenderer event={selectedEvent} />}
         </>
       )}
     </AnimateLayout>
   );
 }
 
-function NotificationRenderer({
-  accessKey,
-  event,
-}: {
-  accessKey: string;
-  event: Events;
-}) {
+function NotificationRenderer({ event }: { event: Events }) {
   const {
     resp: notifs,
     fetchResource: fetchNotifs,
@@ -86,8 +72,7 @@ function NotificationRenderer({
   async function deleteNotif() {
     if (message) return;
     setMessage("deleting..");
-    const res = await deleteNotification({ event, ts: confirm.ts, accessKey })
-      .result;
+    const res = await deleteNotification({ event, ts: confirm.ts }).result;
     const { error, data } = res;
     setError(error || "");
     if (data) {
@@ -102,7 +87,6 @@ function NotificationRenderer({
         close={closeAddNotif}
         fetchNotifs={fetchNotifs}
         event={event}
-        accessKey={accessKey}
       />
     );
   return (

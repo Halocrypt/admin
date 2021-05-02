@@ -18,11 +18,9 @@ export function AddNotification({
   close,
   fetchNotifs,
   event,
-  accessKey,
 }: {
   close(): void;
   event: Events;
-  accessKey: string;
   fetchNotifs: FetchResourceCallback<true>;
 }) {
   const [ts, setTs] = useState(+new Date());
@@ -46,7 +44,7 @@ export function AddNotification({
     };
     setError("");
     setMessage("Adding...");
-    const result = await addNotification({ event, body, accessKey }).result;
+    const result = await addNotification({ event, body }).result;
     const { data, error } = result;
     setError(error || "");
     if (data) {
