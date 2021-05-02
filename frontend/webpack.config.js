@@ -89,6 +89,7 @@ function getCfg(isLegacy) {
     },
     entry: `${__dirname}/src/App.tsx`,
     output: {
+      publicPath: "/",
       environment: getEnvObject(isLegacy),
       path: `${__dirname}/${outputDir}/`,
       filename: `${staticFilePrefix}/${
