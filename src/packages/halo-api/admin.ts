@@ -13,7 +13,7 @@ export type QuestionMutation = Pick<
   "question_points" | "question_content" | "question_hints"
 > & { answer: string };
 export function listUsers(event: Events) {
-  return requests.get<IUser[]>(playRoutes.leaderboard(event));
+  return requests.get<IUser[]>(adminRoutes.listUsers(event));
 }
 
 export function disqualifyUser(
