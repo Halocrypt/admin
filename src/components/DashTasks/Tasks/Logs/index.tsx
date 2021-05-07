@@ -105,9 +105,7 @@ function LogViewer({ accessKey }: { accessKey: string }) {
             })}
             buttonClass={actionButton}
             render={([user, question, answer, isCorrect, timeStamp]) => (
-              <AnimateLayout
-                animId={timeStamp + ""}
-                element="div"
+              <div
                 style={isCorrect ? { borderColor: "green" } : null}
                 class={css({
                   padding: "1rem",
@@ -116,6 +114,7 @@ function LogViewer({ accessKey }: { accessKey: string }) {
                   borderRadius: "5px",
                   border: "2px solid transparent",
                   background: "var(--bg)",
+                  transition: "0.3s ease",
                 })}
               >
                 <div>
@@ -131,7 +130,7 @@ function LogViewer({ accessKey }: { accessKey: string }) {
                 <div class={css({ textAlign: "right", fontSize: ".8rem" })}>
                   {readableDate(timeStamp)}
                 </div>
-              </AnimateLayout>
+              </div>
             )}
             dualButtons={true}
           />
