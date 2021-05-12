@@ -3,8 +3,8 @@ const TerserWebpackPlugin = require("terser-webpack-plugin");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const autoPrefixPlugin = require("autoprefixer");
-const HTMLInlineCSSWebpackPlugin = require("html-inline-css-webpack-plugin")
-  .default;
+const HTMLInlineCSSWebpackPlugin =
+  require("html-inline-css-webpack-plugin").default;
 const WebpackModuleNoModulePlugin = require("@hydrophobefireman/module-nomodule");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const { autoPrefixCSS } = require("catom/dist/css");
@@ -13,7 +13,7 @@ const uiConfig = require("./ui.config.json");
 const mode = process.env.NODE_ENV;
 const isProd = mode === "production";
 
-const { outputDir, staticFilePrefix, inlineCSS, enableCatom } = uiConfig;
+const { outputDir, staticFilePrefix, inlineCSS, enableCatom, fonts } = uiConfig;
 
 function prodOrDev(a, b) {
   return isProd ? a : b;
@@ -157,7 +157,10 @@ function getCfg(isLegacy) {
       isProd &&
         new OptimizeCSSAssetsPlugin({ cssProcessor: require("cssnano")() }),
       isProd && inlineCSS && new HTMLInlineCSSWebpackPlugin({}),
-      new WebpackModuleNoModulePlugin(isLegacy ? "legacy" : "modern"),
+      new WebpackModuleNoModulePlugin({
+        mode: isLegacy ? "legacy" : "modern",
+        fonts,
+      }),
     ].filter(Boolean),
   };
 }

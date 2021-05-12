@@ -17,9 +17,11 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function UsersList({ event }: { event: Events }) {
-  const { resp: users, error, setResp: setUsers } = useResource(listUsers, [
-    event,
-  ]);
+  const {
+    resp: users,
+    error,
+    setResp: setUsers,
+  } = useResource(listUsers, [event]);
 
   if (error) return <div class={css({ color: "red" })}>{error}</div>;
   if (!users) return <div>Loading... </div>;
@@ -78,6 +80,7 @@ function UserRenderer({ users, setUsers }: RendererProps) {
           items={filteredUsers}
           dualButtons={true}
           buttonClass={actionButton}
+          buttonWrapperClass={css({ textAlign: "right" })}
           render={(x: IUser, i: number) => (
             <div class={userItem}>
               <div>
