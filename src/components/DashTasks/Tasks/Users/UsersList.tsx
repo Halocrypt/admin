@@ -75,6 +75,7 @@ function UserRenderer({ users, setUsers }: RendererProps) {
         </button>
       </div>
       <div class={resourceContainer}>
+        {filteredUsers && `${filteredUsers.length} results`}
         <Paginate
           atOnce={100}
           items={filteredUsers}
