@@ -24,7 +24,9 @@ export function useFilteredUsers(
             !!(
               contains(x.name, query) ||
               contains(x.user, query) ||
-              (x._secure_ && contains(x._secure_.email, query)) ||
+              (x._secure_ &&
+                (contains(x._secure_.email, query) ||
+                  contains(x._secure_.institution, query))) ||
               contains(x.points, query) ||
               contains(x.level, query)
             )
