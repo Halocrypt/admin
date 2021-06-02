@@ -23,7 +23,7 @@ export function useFilteredLogs(
             contains(x[0], query) ||
             contains(x[2], query);
           if (cleanUser) {
-            f = x[0] === cleanUser;
+            f = f && x[0] === cleanUser;
           }
           if (filterType === "all") return f;
           return f && (filterType === "correct" ? x[3] : !x[3]);
