@@ -27,6 +27,6 @@ export function useFilteredLogs(
         })
       );
     });
-  }, [logs, query, filterType]);
+  }, [logs, query, username, filterType]);
   return filteredLogs;
 }
