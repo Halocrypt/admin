@@ -7,15 +7,21 @@ import { raf } from "@/util/raf";
 export function useFilteredLogs(
   logs: Log[],
   query: string,
+  username: string,
   filterType: "all" | "correct" | "incorrect"
 ) {
+  const cleanUser = clean(username);
+
   const [filteredLogs, setFilteredLogs] = useState(logs);
   useEffect(() => {
     raf(() => {
       if (!logs) return;
       setFilteredLogs(
         logs.filter((x) => {
-          const f = !query || contains(x[0], query) || contains(x[2], query);
+          let f = !query || contains(x[0], query) || contains(x[2], query);
+          if (cleanUser) {
+            f = x[0] === cleanUser;
+          }
           if (filterType === "all") return f;
           return f && (filterType === "correct" ? x[3] : !x[3]);
         })
