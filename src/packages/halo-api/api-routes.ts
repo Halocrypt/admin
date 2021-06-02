@@ -34,6 +34,7 @@ export const adminRoutes = {
   notificationKey: absoluteURL("/admin/notificaton-key/"),
   logserverKey: absoluteURL("/admin/yek-revresgol/"),
   listUsers: (event: Events) => absoluteURL(`/admin/${event}/users/`),
+  getLogs: "/logs.json",
 
   addNotification: (event: Events) =>
     absoluteURL(`/admin/${event}/notifications/`),

@@ -61,7 +61,7 @@ export function getLogKey() {
 }
 
 export function getLogs() {
-  return import("@/data/logs.json");
+  return requests.get<Log[]>(adminRoutes.getLogs);
 }
 
 interface DeleteNotifProps {
