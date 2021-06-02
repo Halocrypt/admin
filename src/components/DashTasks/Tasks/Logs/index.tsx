@@ -27,7 +27,7 @@ const inactiveCss = { background: "var(--alpha)" };
 function LogViewer() {
   const [search, setSearch] = useState("");
   const [username, setUsername] = useState("");
-  const { resp: fetchedLogs, error } = useResource(getLogs, []);
+  const { resp: fetchedLogs, error } = useResource(getLogs as any, []);
   const [filterType, setFilterType] =
     useState<"all" | "correct" | "incorrect">("all");
   function handleClick(e: JSX.TargetedMouseEvent<HTMLButtonElement>) {
