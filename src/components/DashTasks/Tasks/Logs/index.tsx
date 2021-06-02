@@ -15,38 +15,19 @@ import { useResource } from "@/hooks/use-resource";
 import { useState } from "@hydrophobefireman/ui-lib";
 
 export function Logs() {
-  const { resp: key, error: keyError } = useResource(getLogKey, []);
   return (
-    <AnimateLayout
-      onlyInitial
-      element="section"
-      animId="edit-logs"
-      class={taskWrapper}
-    >
-      <h2 class={eventHeadWrapper}>Logs </h2>
-      {!key ? (
-        <div>
-          {keyError ? (
-            <>
-              <div class={css({ color: "red" })}>{keyError}</div>
-            </>
-          ) : (
-            "Loading.."
-          )}
-        </div>
-      ) : (
-        <LogViewer accessKey={key} />
-      )}
-    </AnimateLayout>
+    <section class={taskWrapper}>
+      <LogViewer />
+    </section>
   );
 }
 
 const activeCss = { background: "var(--fg)", color: "var(--font)" };
 const inactiveCss = { background: "var(--alpha)" };
-function LogViewer({ accessKey }: { accessKey: string }) {
+function LogViewer() {
   const [search, setSearch] = useState("");
   const [username, setUsername] = useState("");
-  const { resp: fetchedLogs, error } = useResource(getLogs, [accessKey]);
+  const { resp: fetchedLogs, error } = useResource(getLogs, []);
   const [filterType, setFilterType] =
     useState<"all" | "correct" | "incorrect">("all");
   function handleClick(e: JSX.TargetedMouseEvent<HTMLButtonElement>) {

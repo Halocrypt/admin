@@ -60,10 +60,8 @@ export function getLogKey() {
   return requests.get<string>(adminRoutes.logserverKey);
 }
 
-export function getLogs(accessKey: string) {
-  return requests.get<Log[]>(adminRoutes.getLogs, {
-    "x-access-key": accessKey,
-  });
+export function getLogs() {
+  return requests.get<Log[]>(adminRoutes.getLogs, {});
 }
 
 interface DeleteNotifProps {
