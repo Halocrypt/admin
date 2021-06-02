@@ -18,7 +18,10 @@ export function useFilteredLogs(
       if (!logs) return;
       setFilteredLogs(
         logs.filter((x) => {
-          let f = !query || contains(x[0], query) || contains(x[2], query);
+          let f =
+            (!query && !cleanUser) ||
+            contains(x[0], query) ||
+            contains(x[2], query);
           if (cleanUser) {
             f = x[0] === cleanUser;
           }
